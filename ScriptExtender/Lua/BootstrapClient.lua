@@ -15,15 +15,24 @@ local texto = window.AddText(window, "Teste");
 
 local butao = window.AddButton(window, "Texto aleatório")
 
-local slider = window.AddSlider(window, "Slider", 25, 100, 0);
+local varTeste = 0;
+
+local slider = window.AddSlider(window, "Slider", varTeste, 100, 0);
 
 butao.OnClick = function()    
-    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").vPlayerHealth = 50
+    -- Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").vPlayerHealth = 50
+    print(slider.Value[1]);
     print("Clicou");
 end
 
+-- Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").vPlayerHealth = slider.Value;
 
 
--- for key, value in pairs(Ext.Vars.GetModVariables("CailuMenu")) do
---     print(key)
--- end
+
+
+for key, value in pairs(slider.Value) do
+    print(key)
+end
+
+print(slider.Value[1])
+
