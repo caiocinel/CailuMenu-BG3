@@ -16,6 +16,15 @@ Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "PlayerHeal
     SyncToServer = true
 })
 
+Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "SetGold", {
+    Server = true,
+    Client = true,
+    SyncToClient = true,
+    WriteableOnServer = true,
+    WriteableOnClient = true,
+    SyncToServer = true
+})
+
 local window = Ext.IMGUI.NewWindow("Ignore", 600, 200);
 
 local butao = window.AddButton(window, "Texto aleatório")
@@ -31,12 +40,14 @@ end
 
 local sliderMovSpeed = window.AddSlider(window, "Movement Speed", 1, 10, 0);
 local sliderPlayerHealth = window.AddSlider(window, "PlayerHealth", 100, 100, 1);
+local inputGold = window.AddSlider(window, "Gold", -1, 1000000, 0);
 
 
 local bVars = {
     MovementMultiplier = 1,
     HealthSetter = 100,
-    PlayerHealthPercentage = 100
+    PlayerHealthPercentage = 100,
+    SetGold = -1
 }
 
 Ext.Events.Tick:Subscribe(function(object, event)
@@ -48,7 +59,15 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
     if (sliderPlayerHealth.Value[1] ~= bVars.PlayerHealthPercentage) then
         bVars.PlayerHealthPercentage = sliderPlayerHealth.Value[1];
-        Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage = bVars.PlayerHealthPercentage;
+        Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage = bVars
+        .PlayerHealthPercentage;
+    end
+
+
+
+    if (inputGold.Value[1] ~= bVars.SetGold) then
+        bVars.inputGold = inputGold.Value[1];
+        Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").SetGold = bVars.inputGold;
     end
 
 
