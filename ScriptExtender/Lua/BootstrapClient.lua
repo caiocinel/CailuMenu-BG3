@@ -1,4 +1,13 @@
-Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "vPlayerHealth", {
+Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "MovementMultiplier", {
+    Server = true,
+    Client = true,
+    SyncToClient = true,
+    WriteableOnServer = true,
+    WriteableOnClient = true,
+    SyncToServer = true
+})
+
+Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "PlayerHealthPercentage", {
     Server = true,
     Client = true,
     SyncToClient = true,
@@ -9,18 +18,9 @@ Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "vPlayerHea
 
 local window = Ext.IMGUI.NewWindow("Ignore", 600, 200);
 
-
-
-local texto = window.AddText(window, "Teste");
-
 local butao = window.AddButton(window, "Texto aleatório")
-
-local varTeste = 0;
-
-local slider = window.AddSlider(window, "Slider", varTeste, 100, 0);
-
 butao.OnClick = function()    
-    -- Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").vPlayerHealth = 50
+    
     print(slider.Value[1]);
     print("Clicou");
 end
@@ -29,10 +29,29 @@ end
 
 
 
+local sliderMovSpeed = window.AddSlider(window, "Movement Speed", 1, 10, 0);
+local sliderPlayerHealth = window.AddSlider(window, "PlayerHealth", 100, 100, 1);
 
-for key, value in pairs(slider.Value) do
-    print(key)
-end
 
-print(slider.Value[1])
+local bVars = {
+    MovementMultiplier = 1,
+    HealthSetter = 100,
+    PlayerHealthPercentage = 100
+}
 
+Ext.Events.Tick:Subscribe(function(object, event)
+
+    if (sliderMovSpeed.Value[1] ~= bVars.MovementMultiplier) then
+        bVars.MovementMultiplier = sliderMovSpeed.Value[1];
+        Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").MovementMultiplier = bVars.MovementMultiplier;
+    end
+
+    if (sliderPlayerHealth.Value[1] ~= bVars.PlayerHealthPercentage) then
+        bVars.PlayerHealthPercentage = sliderPlayerHealth.Value[1];
+        Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage = bVars.PlayerHealthPercentage;
+    end
+
+
+
+
+end, { Once = false })
