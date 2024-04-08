@@ -1,5 +1,5 @@
 {
     "RequiredVersion": 1,
-	"ModTable": "ExtenderSampleMod",
+	"ModTable": "CailuMenu",
 	"FeatureFlags": ["Lua"]
 }

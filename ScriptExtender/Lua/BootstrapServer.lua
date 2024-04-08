@@ -1,116 +1,89 @@
+Ext.Require("Const.lua")
+Ext.Require("Utils.lua")
+Ext.Require("ServerFunctions.lua")
 
-local oMovementVars = {
-    MovementAcceleration = 12.0,
-    MovementSpeedDash = 6.0,
-    MovementSpeedRun = 3.75,
-    MovementSpeedSprint = 6.0,
-    MovementSpeedWalk = 2.0,
-    WorldClimbingSpeed = 6.0
-}
 
-Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "MovementMultiplier", {
-    Server = true,
-    Client = true,
-    SyncToClient = true,
-    WriteableOnServer = true,
-    WriteableOnClient = true,
-    SyncToServer = true
-})
 
-Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "PlayerHealthPercentage", {
-    Server = true,
-    Client = true,
-    SyncToClient = true,
-    WriteableOnServer = true,
-    WriteableOnClient = true,
-    SyncToServer = true
-})
-
-Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", "SetGold", {
-    Server = true,
-    Client = true,
-    SyncToClient = true,
-    WriteableOnServer = true,
-    WriteableOnClient = true,
-    SyncToServer = true
-})
-
-if(Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").MovementMultiplier == nil) then
-    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").MovementMultiplier = 1;
-end
-
-if (Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage == nil) then
-    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage = 100;
-end
-
-if (Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").SetGold == nil) then
-    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").SetGold = -1;
-end
+Utils.Vars.Register("MovementMultiplier", 1);
+Utils.Vars.Register("PlayerHealthPercentage", 100);
+Utils.Vars.Register("SetGold", -1);
+Utils.Vars.Register("DiceRollsCritic", 0);
+Utils.Vars.Register("Stats", {
+    Strength = -1,
+    Dexterity = -1,
+    Constitution = -1,
+    Intelligence = -1,
+    Wisdom = -1,
+    Charisma = -1,
+    Sentinel = -1
+});
 
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-    -- Osi.AddBoosts(GetHostCharacter(), "Ability(Strength, 10)", "", GetHostCharacter())
-     
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(None, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(Attack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeWeaponAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedWeaponAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeSpellAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedSpellAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeUnarmedAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedUnarmedAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(SkillCheck, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(SavingThrow, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RawAbility, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(Damage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeOffHandWeaponAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedOffHandWeaponAttack, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(DeathSavingThrow, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeWeaponDamage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedWeaponDamage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeSpellDamage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedSpellDamage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(MeleeUnarmedDamage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(RangedUnarmedDamage, 20)", "", GetHostCharacter())
-    Osi.AddBoosts(GetHostCharacter(), "MinimumRollResult(Sentinel, 20)", "", GetHostCharacter())
-
-
-
+    Osi.AddBoosts(GetHostCharacter(), "Ability(Strength, -15)", "", GetHostCharacter())
 end)
 
 local bVars = {
     MovementMultiplier = 1,
     HealthSetter = 100,
-    PlayerHealthPercentage = 100
+    PlayerHealthPercentage = 100,
+    DiceRollsCritic = 0,
 }
 
 Ext.Events.Tick:Subscribe(function(object, event)
 
-    if (Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").MovementMultiplier ~= bVars.MovementMultiplier) then
+    if (Utils.Vars.Get("MovementMultiplier") ~= nil and Utils.Vars.Get("MovementMultiplier") ~= bVars.MovementMultiplier) then
         for i, v in pairs(oMovementVars) do
-            _C().ServerCharacter.Template[i] = oMovementVars[i] *
-            Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").MovementMultiplier;
+            _C().ServerCharacter.Template[i] = oMovementVars[i] * Utils.Vars.Get("MovementMultiplier");
         end
 
-        bVars.MovementMultiplier = Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").MovementMultiplier;      
+        bVars.MovementMultiplier = Utils.Vars.Get("MovementMultiplier");
     end
 
 
-    if (Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage ~= bVars.PlayerHealthPercentage) then
+    if (Utils.Vars.Get("PlayerHealthPercentage") ~= nil and Utils.Vars.Get("PlayerHealthPercentage") ~= bVars.PlayerHealthPercentage) then
 
-        local playerHealthPercentage = Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").PlayerHealthPercentage;
-
-        Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()) * (playerHealthPercentage / 100),
-            "Guaranteed");
-        bVars.PlayerHealthPercentage = playerHealthPercentage;
+        local newHP = Osi.GetMaxHitpoints(GetHostCharacter()) * (Utils.Vars.Get("PlayerHealthPercentage") / 100);
+        Osi.SetHitpoints(GetHostCharacter(), newHP, "Guaranteed");
+        bVars.PlayerHealthPercentage = Utils.Vars.Get("PlayerHealthPercentage");
     end
-
-    if(Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").SetGold ~= -1) then
     
+    if (Utils.Vars.Get("SetGold") ~= nil and Utils.Vars.Get("SetGold") ~= -1) then
+        Osi.AddGold(GetHostCharacter(), Utils.Vars.Get("SetGold") - Osi.GetGold(GetHostCharacter()));
+        Utils.Vars.Set("SetGold", -1);
+    end
 
-        Osi.AddGold(GetHostCharacter(), Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").SetGold - Osi.GetGold(GetHostCharacter()));
+    if (Utils.Vars.Get("DiceRollsCritic") ~= nil and Utils.Vars.Get("DiceRollsCritic") ~= bVars.DiceRollsCritic) then
+        bVars.DiceRollsCritic = Utils.Vars.Get("DiceRollsCritic");
 
-        Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc").SetGold = -1;
+        if(bVars.DiceRollsCritic == 1) then
+            EnableLucky()
+        else
+            DisableLucky()
+        end
+
+    end
+
+    if Utils.Vars.Get("Stats") ~= nil then
+
+
+        
+        _D(_C().Stats.AbilityModifiers)
+
+
+        for key, value in pairs(_C().Stats) do
+             print(key)          
+        end
+
+        for i, v in pairs(Utils.Vars.Get("Stats")) do            
+            if(v ~= -1) then
+                Osi.AddBoosts(GetHostCharacter(), "Attribute("..i..", "..v..")", "", GetHostCharacter())                
+            end
+        end
+
+        Utils.Vars.Set("Stats", nil)
+
+        
     end
 
 
