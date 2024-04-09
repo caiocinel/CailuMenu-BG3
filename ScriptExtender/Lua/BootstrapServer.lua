@@ -4,23 +4,29 @@ Ext.Require("ServerFunctions.lua")
 
 
 
-Utils.Vars.Register("MovementMultiplier", 1);
-Utils.Vars.Register("PlayerHealthPercentage", 100);
-Utils.Vars.Register("SetGold", -1);
-Utils.Vars.Register("DiceRollsCritic", 0);
-Utils.Vars.Register("Stats", {
-    Strength = -1,
-    Dexterity = -1,
-    Constitution = -1,
-    Intelligence = -1,
-    Wisdom = -1,
-    Charisma = -1,
-    Sentinel = -1
-});
+Ext.Events.SessionLoaded:Subscribe(function()
+    Utils.Vars.Register("MovementMultiplier", 1);
+    Utils.Vars.Register("PlayerHealthPercentage", 100);
+    Utils.Vars.Register("SetGold", -1);
+    Utils.Vars.Register("DiceRollsCritic", 0);
+    Utils.Vars.Register("Stats", {
+        Strength = -1,
+        Dexterity = -1,
+        Constitution = -1,
+        Intelligence = -1,
+        Wisdom = -1,
+        Charisma = -1,
+    });
+end)
 
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-    Osi.AddBoosts(GetHostCharacter(), "Ability(Strength, -15)", "", GetHostCharacter())
+    -- Osi.AddBoosts(GetHostCharacter(), "Ability(Dexterity, -15)", "", GetHostCharacter())
+
+    Osi.RemoveAllBoosts(GetHostCharacter(), "Ability(Dexterity, -15)", "")
+
+
+
 end)
 
 local bVars = {
@@ -67,17 +73,13 @@ Ext.Events.Tick:Subscribe(function(object, event)
     if Utils.Vars.Get("Stats") ~= nil then
 
 
-        
-        _D(_C().Stats.AbilityModifiers)
-
-
-        for key, value in pairs(_C().Stats) do
-             print(key)          
-        end
-
         for i, v in pairs(Utils.Vars.Get("Stats")) do            
             if(v ~= -1) then
-                Osi.AddBoosts(GetHostCharacter(), "Attribute("..i..", "..v..")", "", GetHostCharacter())                
+                Osi.AddBoosts(GetHostCharacter(),
+                    "Ability(" ..
+                    i ..
+                    ", " .. tostring(Ext.Math.Trunc(v - _C().Stats.Abilities[oStatsListIndex[i]])):gsub(".0", "") .. ")",
+                    "", GetHostCharacter())
             end
         end
 

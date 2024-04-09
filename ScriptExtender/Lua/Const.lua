@@ -8,7 +8,7 @@ oMovementVars = {
 }
 
 oStatsList = {
-    --"None",
+    "None",
     "Strength",
     "Dexterity",
     "Constitution",
@@ -16,4 +16,14 @@ oStatsList = {
     "Wisdom",
     "Charisma",
     --"Sentinel"
+}
+
+oStatsListIndex = {
+    None = 1,
+    Strength = 2,
+    Dexterity = 3,
+    Constitution = 4,
+    Intelligence = 5,
+    Wisdom = 6,
+    Charisma = 7,
 }
