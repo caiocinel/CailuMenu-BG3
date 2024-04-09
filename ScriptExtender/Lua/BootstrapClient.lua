@@ -6,6 +6,7 @@ Ext.Events.SessionLoaded:Subscribe(function ()
     Utils.Vars.Register("PlayerHealthPercentage", 100);
     Utils.Vars.Register("SetGold", -1);
     Utils.Vars.Register("DiceRollsCritic", 0);
+    Utils.Vars.Register("PlayerScale", -1);
     Utils.Vars.Register("Stats", {
         Strength = -1,
         Dexterity = -1,
@@ -23,6 +24,7 @@ local tabs = window.AddTabBar(window, "Tabs");
 
 local tabGeneral = tabs.AddTabItem(tabs, "General");
 local sliderMovSpeed = tabGeneral.AddSlider(tabGeneral, "Movement Speed", 1, 10, 0);
+local sliderPlayerScale = tabGeneral.AddSlider(tabGeneral, "Player Scale", 1, 10, 0);
 local sliderPlayerHealth = tabGeneral.AddSlider(tabGeneral, "Player Health", 100, 100, 1);
 local inputGold = tabGeneral.AddSlider(tabGeneral, "Gold", -1, 1000000, 0);
 local checkRollCritic = tabGeneral.AddCheckbox(tabGeneral, "Perfect Rolls", false);
@@ -72,6 +74,7 @@ local bVars = {
     PlayerHealthPercentage = 100,
     SetGold = -1,
     DiceRollsCritic = 0,
+    PlayerScale = -1,
     Stats = {
         Strength = -1,
         Dexterity = -1,
@@ -103,6 +106,11 @@ Ext.Events.Tick:Subscribe(function(object, event)
     if (checkRollCritic.Checked ~= bVars.DiceRollsCritic) then
         bVars.DiceRollsCritic = checkRollCritic.Checked and 1 or 0;
         Utils.Vars.Set("DiceRollsCritic", bVars.DiceRollsCritic);
+    end
+
+    if (sliderPlayerScale.Value[1] ~= bVars.PlayerScale) then
+        bVars.PlayerScale = sliderPlayerScale.Value[1];
+        Utils.Vars.Set("PlayerScale", bVars.PlayerScale);
     end
 
 end, { Once = false })
