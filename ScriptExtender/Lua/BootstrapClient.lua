@@ -1,22 +1,19 @@
 Ext.Require("Utils.lua")
 Ext.Require("Const.lua")
 
-Ext.Events.SessionLoaded:Subscribe(function ()
-    Utils.Vars.Register("MovementMultiplier", 1);
-    Utils.Vars.Register("PlayerHealthPercentage", 100);
-    Utils.Vars.Register("SetGold", -1);
-    Utils.Vars.Register("DiceRollsCritic", 0);
-    Utils.Vars.Register("PlayerScale", -1);
-    Utils.Vars.Register("Stats", {
-        Strength = -1,
-        Dexterity = -1,
-        Constitution = -1,
-        Intelligence = -1,
-        Wisdom = -1,
-        Charisma = -1,
-    });
-end)
-
+Utils.Vars.Register("MovementMultiplier", 1);
+Utils.Vars.Register("PlayerHealthPercentage", 100);
+Utils.Vars.Register("SetGold", -1);
+Utils.Vars.Register("DiceRollsCritic", 0);
+Utils.Vars.Register("PlayerScale", -1);
+Utils.Vars.Register("Stats", {
+    Strength = -1,
+    Dexterity = -1,
+    Constitution = -1,
+    Intelligence = -1,
+    Wisdom = -1,
+    Charisma = -1,
+});
 local window = Ext.IMGUI.NewWindow("Cailu Menu 2", 600, 200);
 
 local tabs = window.AddTabBar(window, "Tabs");
@@ -24,7 +21,7 @@ local tabs = window.AddTabBar(window, "Tabs");
 
 local tabGeneral = tabs.AddTabItem(tabs, "General");
 local sliderMovSpeed = tabGeneral.AddSlider(tabGeneral, "Movement Speed", 1, 10, 0);
-local sliderPlayerScale = tabGeneral.AddSlider(tabGeneral, "Player Scale", 1, 10, 0);
+local sliderPlayerScale = tabGeneral.AddSlider(tabGeneral, "Player Scale", -1, 10, 0);
 local sliderPlayerHealth = tabGeneral.AddSlider(tabGeneral, "Player Health", 100, 100, 1);
 local inputGold = tabGeneral.AddSlider(tabGeneral, "Gold", -1, 1000000, 0);
 local checkRollCritic = tabGeneral.AddCheckbox(tabGeneral, "Perfect Rolls", false);
@@ -87,7 +84,6 @@ local bVars = {
 }
 
 Ext.Events.Tick:Subscribe(function(object, event)
-
     if (sliderMovSpeed.Value[1] ~= bVars.MovementMultiplier) then
         bVars.MovementMultiplier = sliderMovSpeed.Value[1];
         Utils.Vars.Set("MovementMultiplier",bVars.MovementMultiplier);
@@ -103,7 +99,7 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Utils.Vars.Set("SetGold", bVars.inputGold);
     end
 
-    if (checkRollCritic.Checked ~= bVars.DiceRollsCritic) then
+    if ((checkRollCritic.Checked and 1 or 0) ~= bVars.DiceRollsCritic) then
         bVars.DiceRollsCritic = checkRollCritic.Checked and 1 or 0;
         Utils.Vars.Set("DiceRollsCritic", bVars.DiceRollsCritic);
     end

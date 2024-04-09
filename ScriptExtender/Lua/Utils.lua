@@ -12,12 +12,21 @@ Utils.Vars.Register = function(varName, defaultValue)
         WriteableOnClient = true
     })
 
+
+    if (not Ext.Mod.IsModLoaded("787ce468-859f-4e07-83e2-61c31139e1bc")) then
+        return;
+    end
+
     if(Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] ~= nil) then
         Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] = defaultValue;
     end
 end
 
 Utils.Vars.Get = function(varName)
+
+
+
+
     return Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName]
 end
 
