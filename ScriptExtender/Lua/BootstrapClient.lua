@@ -6,6 +6,7 @@ Utils.Vars.Register("PlayerHealthPercentage", 100);
 Utils.Vars.Register("SetGold", -1);
 Utils.Vars.Register("DiceRollsCritic", 0);
 Utils.Vars.Register("PlayerScale", -1);
+Utils.Vars.Register("GodMode", 0);
 Utils.Vars.Register("Stats", {
     Strength = -1,
     Dexterity = -1,
@@ -25,6 +26,7 @@ local sliderPlayerScale = tabGeneral.AddSlider(tabGeneral, "Player Scale", -1, 1
 local sliderPlayerHealth = tabGeneral.AddSlider(tabGeneral, "Player Health", 100, 100, 1);
 local inputGold = tabGeneral.AddSlider(tabGeneral, "Gold", -1, 1000000, 0);
 local checkRollCritic = tabGeneral.AddCheckbox(tabGeneral, "Perfect Rolls", false);
+local checkGodMode = tabGeneral.AddCheckbox(tabGeneral, "God Mode", false);
 
 
 local tabStats = tabs.AddTabItem(tabs, "Stats");
@@ -72,6 +74,7 @@ local bVars = {
     SetGold = -1,
     DiceRollsCritic = 0,
     PlayerScale = -1,
+    GodMode = 0,
     Stats = {
         Strength = -1,
         Dexterity = -1,
@@ -102,6 +105,11 @@ Ext.Events.Tick:Subscribe(function(object, event)
     if ((checkRollCritic.Checked and 1 or 0) ~= bVars.DiceRollsCritic) then
         bVars.DiceRollsCritic = checkRollCritic.Checked and 1 or 0;
         Utils.Vars.Set("DiceRollsCritic", bVars.DiceRollsCritic);
+    end
+
+    if ((checkGodMode.Checked and 1 or 0) ~= bVars.GodMode) then
+        bVars.GodMode = checkGodMode.Checked and 1 or 0;
+        Utils.Vars.Set("GodMode", bVars.GodMode);
     end
 
     if (sliderPlayerScale.Value[1] ~= bVars.PlayerScale) then

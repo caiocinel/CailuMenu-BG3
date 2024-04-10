@@ -7,6 +7,7 @@ Utils.Vars.Register("PlayerHealthPercentage", 100);
 Utils.Vars.Register("PlayerScale", -1);
 Utils.Vars.Register("SetGold", -1);
 Utils.Vars.Register("DiceRollsCritic", 0);
+Utils.Vars.Register("GodMode", 0);
 Utils.Vars.Register("Stats", {
     Strength = -1,
     Dexterity = -1,
@@ -18,9 +19,9 @@ Utils.Vars.Register("Stats", {
 
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-    --Osi.AddBoosts(GetHostCharacter(), "ScaleMultiplier(3)", "", GetHostCharacter())
 
-    Osi.RemoveBoosts(GetHostCharacter(), "ScaleMultiplier(3)", 0, "", GetHostCharacter())
+
+    
 
 end)
 
@@ -30,13 +31,10 @@ local bVars = {
     PlayerHealthPercentage = 100,
     DiceRollsCritic = 0,
     PlayerScale = -1,
+    GodMode = 0
 }
 
 Ext.Events.Tick:Subscribe(function(object, event)
-    if(Utils.Vars.Get("MovementMultiplier") == nil) then -- Prevent stuck script
-        return;
-    end
-
 
     if (Utils.Vars.Get("MovementMultiplier") ~= nil and Utils.Vars.Get("MovementMultiplier") ~= bVars.MovementMultiplier) then
         for i, v in pairs(oMovementVars) do
@@ -67,7 +65,18 @@ Ext.Events.Tick:Subscribe(function(object, event)
         else
             DisableLucky()
         end
+    end
 
+    if (Utils.Vars.Get("GodMode") ~= nil and Utils.Vars.Get("GodMode") ~= bVars.GodMode) then
+        bVars.GodMode = Utils.Vars.Get("GodMode");
+
+
+        Osi.SetImmortal(GetHostCharacter(), bVars.GodMode);
+    end
+
+    if(bVars.GodMode == 1) then
+        -- print("ATa");
+        Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
     end
 
     if Utils.Vars.Get("Stats") ~= nil then
@@ -93,7 +102,7 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
         bVars.PlayerScale = Utils.Vars.Get("PlayerScale");        
         
-        if(bVars.PlayerScale ~= -1) then
+        if (bVars.PlayerScale ~= -1 and bVars.PlayerScale ~= nil) then
             Osi.AddBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", "", GetHostCharacter())
         end
         
