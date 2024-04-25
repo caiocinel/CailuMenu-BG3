@@ -1,121 +1,118 @@
 Ext.Require("Const.lua")
-Ext.Require("Utils.lua")
+Ext.Require("Vars.lua")
 Ext.Require("ServerFunctions.lua")
 
-Utils.Vars.Register("MovementMultiplier", 1);
-Utils.Vars.Register("PlayerHealthPercentage", 100);
-Utils.Vars.Register("PlayerScale", -1);
-Utils.Vars.Register("SetGold", -1);
-Utils.Vars.Register("DiceRollsCritic", 0);
-Utils.Vars.Register("GodMode", 0);
-Utils.Vars.Register("Stats", {
-    Strength = -1,
-    Dexterity = -1,
-    Constitution = -1,
-    Intelligence = -1,
-    Wisdom = -1,
-    Charisma = -1,
-});
-
+Vars.Register("Vars", var)
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
     
-
+    _D(Vars.MoveSpeed.Enabled())
+    Vars.MoveSpeed.SetEnabled(1);
+    _D(Vars.MoveSpeed.Enabled())
 end)
 
-local bVars = {
-    MovementMultiplier = 1,
-    HealthSetter = 100,
-    PlayerHealthPercentage = 100,
-    DiceRollsCritic = 0,
-    PlayerScale = -1,
-    GodMode = 0
-}
 
 Ext.Events.Tick:Subscribe(function(object, event)
-
-    if (Utils.Vars.Get("MovementMultiplier") ~= nil and Utils.Vars.Get("MovementMultiplier") ~= bVars.MovementMultiplier) then
-        for i, v in pairs(oMovementVars) do
-            _C().ServerCharacter.Template[i] = oMovementVars[i] * Utils.Vars.Get("MovementMultiplier");
-        end
-
-        bVars.MovementMultiplier = Utils.Vars.Get("MovementMultiplier");
-    end
-
-
-    if (Utils.Vars.Get("PlayerHealthPercentage") ~= nil and Utils.Vars.Get("PlayerHealthPercentage") ~= bVars.PlayerHealthPercentage) then
-
-        local newHP = Osi.GetMaxHitpoints(GetHostCharacter()) * (Utils.Vars.Get("PlayerHealthPercentage") / 100);
-        Osi.SetHitpoints(GetHostCharacter(), newHP, "Guaranteed");
-        bVars.PlayerHealthPercentage = Utils.Vars.Get("PlayerHealthPercentage");
-    end
     
-    if (Utils.Vars.Get("SetGold") ~= nil and Utils.Vars.Get("SetGold") ~= -1) then
-        Osi.AddGold(GetHostCharacter(), Utils.Vars.Get("SetGold") - Osi.GetGold(GetHostCharacter()));
-        Utils.Vars.Set("SetGold", -1);
+    
+    if((Vars.CanLoop == nil) or (not Vars.CanLoop())) then
+        return
     end
 
-    if (Utils.Vars.Get("DiceRollsCritic") ~= nil and Utils.Vars.Get("DiceRollsCritic") ~= bVars.DiceRollsCritic) then
-        bVars.DiceRollsCritic = Utils.Vars.Get("DiceRollsCritic");
+    -- _D(Vars.GetAll())
 
-        if(bVars.DiceRollsCritic == 1) then
-            EnableLucky()
+
+    if (Vars.MoveSpeed.IsChanged()) then
+
+        if(Vars.MoveSpeed.Enabled()) then
+            for i, v in pairs(oMovementVars) do
+                _C().ServerCharacter.Template[i] = oMovementVars[i] * Vars.MoveSpeed.Value();
+            end
         else
-            DisableLucky()
-        end
-    end
-
-    if (Utils.Vars.Get("GodMode") ~= nil and Utils.Vars.Get("GodMode") ~= bVars.GodMode) then
-        bVars.GodMode = Utils.Vars.Get("GodMode");
-
-        if(bVars.GodMode == 1) then
-            Osi.AddBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", "", GetHostCharacter())
-            Osi.AddBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", "", GetHostCharacter())
-            Osi.AddBoosts(GetHostCharacter(), "DamageBonus(999)", "", GetHostCharacter())
-            Osi.AddBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", "", GetHostCharacter())
-        else
-            Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", 0, "", GetHostCharacter())
-            Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", 0, "", GetHostCharacter())
-            Osi.RemoveBoosts(GetHostCharacter(), "DamageBonus(999)", 0, "", GetHostCharacter())
-            Osi.RemoveBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", 0, "", GetHostCharacter())
-        end
-
-        Osi.SetImmortal(GetHostCharacter(), bVars.GodMode);
-    end
-
-    if(bVars.GodMode == 1) then
-        -- print("ATa");
-        Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
-    end
-
-    if Utils.Vars.Get("Stats") ~= nil then
-
-        for i, v in pairs(Utils.Vars.Get("Stats")) do            
-            if(v ~= -1) then
-                Osi.AddBoosts(GetHostCharacter(),
-                    "Ability(" ..
-                    i ..
-                    ", " .. tostring(Ext.Math.Trunc(v - _C().Stats.Abilities[oStatsListIndex[i]])):gsub(".0", "") .. ")",
-                    "", GetHostCharacter())
+            for i, v in pairs(oMovementVars) do
+                _C().ServerCharacter.Template[i] = oMovementVars[i];
             end
         end
 
-        Utils.Vars.Set("Stats", nil)        
+
+        
+        Vars.MoveSpeed.Updated();
     end
 
-    if (Utils.Vars.Get("PlayerScale") ~= nil and Utils.Vars.Get("PlayerScale") ~= bVars.PlayerScale and Utils.Vars.Get("PlayerScale") ~= 1 or (bVars.PlayerScale == -1 and Utils.Vars.Get("PlayerScale") ~= 1)) then
 
-        if(bVars.PlayerScale ~= -1) then
-            Osi.RemoveBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", 0, "", GetHostCharacter())
-        end
+    -- if (Vars.Get("PlayerHealthPercentage") ~= nil and Vars.Get("PlayerHealthPercentage") ~= bVars.PlayerHealthPercentage) then
 
-        bVars.PlayerScale = Utils.Vars.Get("PlayerScale");        
+    --     local newHP = Osi.GetMaxHitpoints(GetHostCharacter()) * (Vars.Get("PlayerHealthPercentage") / 100);
+    --     Osi.SetHitpoints(GetHostCharacter(), newHP, "Guaranteed");
+    --     bVars.PlayerHealthPercentage = Vars.Get("PlayerHealthPercentage");
+    -- end
+    
+    -- if (Vars.Get("SetGold") ~= nil and Vars.Get("SetGold") ~= -1) then
+    --     Osi.AddGold(GetHostCharacter(), Vars.Get("SetGold") - Osi.GetGold(GetHostCharacter()));
+    --     Vars.Set("SetGold", -1);
+    -- end
+
+    -- if (Vars.Get("DiceRollsCritic") ~= nil and Vars.Get("DiceRollsCritic") ~= bVars.DiceRollsCritic) then
+    --     bVars.DiceRollsCritic = Vars.Get("DiceRollsCritic");
+
+    --     if(bVars.DiceRollsCritic == 1) then
+    --         EnableLucky()
+    --     else
+    --         DisableLucky()
+    --     end
+    -- end
+
+    -- if (Vars.Get("GodMode") ~= nil and Vars.Get("GodMode") ~= bVars.GodMode) then
+    --     bVars.GodMode = Vars.Get("GodMode");
+
+    --     if(bVars.GodMode == 1) then
+    --         Osi.AddBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", "", GetHostCharacter())
+    --         Osi.AddBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", "", GetHostCharacter())
+    --         Osi.AddBoosts(GetHostCharacter(), "DamageBonus(999)", "", GetHostCharacter())
+    --         Osi.AddBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", "", GetHostCharacter())
+    --     else
+    --         Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", 0, "", GetHostCharacter())
+    --         Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", 0, "", GetHostCharacter())
+    --         Osi.RemoveBoosts(GetHostCharacter(), "DamageBonus(999)", 0, "", GetHostCharacter())
+    --         Osi.RemoveBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", 0, "", GetHostCharacter())
+    --     end
+
+    --     Osi.SetImmortal(GetHostCharacter(), bVars.GodMode);
+    -- end
+
+    -- if(bVars.GodMode == 1) then
+    --     -- print("ATa");
+    --     Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
+    -- end
+
+    -- if Vars.Get("Stats") ~= nil then
+
+    --     for i, v in pairs(Vars.Get("Stats")) do            
+    --         if(v ~= -1) then
+    --             Osi.AddBoosts(GetHostCharacter(),
+    --                 "Ability(" ..
+    --                 i ..
+    --                 ", " .. tostring(Ext.Math.Trunc(v - _C().Stats.Abilities[oStatsListIndex[i]])):gsub(".0", "") .. ")",
+    --                 "", GetHostCharacter())
+    --         end
+    --     end
+
+    --     Vars.Set("Stats", nil)        
+    -- end
+
+    -- if (Vars.Get("PlayerScale") ~= nil and Vars.Get("PlayerScale") ~= bVars.PlayerScale and Vars.Get("PlayerScale") ~= 1 or (bVars.PlayerScale == -1 and Vars.Get("PlayerScale") ~= 1)) then
+
+    --     if(bVars.PlayerScale ~= -1) then
+    --         Osi.RemoveBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", 0, "", GetHostCharacter())
+    --     end
+
+    --     bVars.PlayerScale = Vars.Get("PlayerScale");        
         
-        if (bVars.PlayerScale ~= -1 and bVars.PlayerScale ~= nil) then
-            Osi.AddBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", "", GetHostCharacter())
-        end
+    --     if (bVars.PlayerScale ~= -1 and bVars.PlayerScale ~= nil) then
+    --         Osi.AddBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", "", GetHostCharacter())
+    --     end
         
-    end
+    -- end
 
 
 end, { Once = false })
