@@ -1,5 +1,10 @@
 {
     "Lua.diagnostics.globals": [
-        "Osi"
+        "Osi",
+        "Ext",
+        "_C",
+        "_D",
+        "_P",
+        "GetHostCharacter"
     ]
 }

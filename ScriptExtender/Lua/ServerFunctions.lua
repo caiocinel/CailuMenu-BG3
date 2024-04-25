@@ -47,3 +47,16 @@ function DisableLucky()
     Osi.RemoveBoosts(GetHostCharacter(), "MinimumRollResult(RangedUnarmedDamage, 20)", 0, "", GetHostCharacter())
     Osi.RemoveBoosts(GetHostCharacter(), "MinimumRollResult(Sentinel, 20)", 0, "", GetHostCharacter())    
 end
+
+
+function RemoveScaleMultiplier()
+    for _, boostEntry in ipairs(Ext.Entity.Get(GetHostCharacter()).BoostsContainer.Boosts) do
+        if boostEntry.Type == "ScaleMultiplier" then
+            for _, b in pairs(boostEntry.Boosts) do
+                for _, z in pairs(b.ScaleMultiplierBoost) do
+                    Osi.RemoveBoosts(GetHostCharacter(), "ScaleMultiplier(" .. z .. ")", 0, "", GetHostCharacter())
+                end
+            end
+        end
+    end
+end

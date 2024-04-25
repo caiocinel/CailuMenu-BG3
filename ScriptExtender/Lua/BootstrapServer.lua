@@ -2,13 +2,8 @@ Ext.Require("Const.lua")
 Ext.Require("Vars.lua")
 Ext.Require("ServerFunctions.lua")
 
-Vars.Register("Vars", var)
-
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-    
-    _D(Vars.MoveSpeed.Enabled())
-    Vars.MoveSpeed.SetEnabled(1);
-    _D(Vars.MoveSpeed.Enabled())
+        
 end)
 
 
@@ -34,9 +29,18 @@ Ext.Events.Tick:Subscribe(function(object, event)
             end
         end
 
-
-        
         Vars.MoveSpeed.Updated();
+    end
+
+    if (Vars.PlayerScale.IsChanged()) then
+        if(not Vars.PlayerScale.Enabled()) then
+            RemoveScaleMultiplier()
+        else
+            RemoveScaleMultiplier()
+            Osi.AddBoosts(GetHostCharacter(), "ScaleMultiplier(" .. Vars.PlayerScale.Value() .. ")", "", GetHostCharacter())
+        end
+    
+        Vars.PlayerScale.Updated();
     end
 
 
@@ -99,21 +103,6 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
     --     Vars.Set("Stats", nil)        
     -- end
-
-    -- if (Vars.Get("PlayerScale") ~= nil and Vars.Get("PlayerScale") ~= bVars.PlayerScale and Vars.Get("PlayerScale") ~= 1 or (bVars.PlayerScale == -1 and Vars.Get("PlayerScale") ~= 1)) then
-
-    --     if(bVars.PlayerScale ~= -1) then
-    --         Osi.RemoveBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", 0, "", GetHostCharacter())
-    --     end
-
-    --     bVars.PlayerScale = Vars.Get("PlayerScale");        
-        
-    --     if (bVars.PlayerScale ~= -1 and bVars.PlayerScale ~= nil) then
-    --         Osi.AddBoosts(GetHostCharacter(), "ScaleMultiplier(" .. bVars.PlayerScale .. ")", "", GetHostCharacter())
-    --     end
-        
-    -- end
-
 
 end, { Once = false })
 

@@ -144,7 +144,9 @@ Vars.MoveSpeed.SetEnabled = function (value)
     end
 
     item.MoveSpeed.Enabled = value;
-    item.MoveSpeed.IsChanged = 1;
+    if(item.MoveSpeed.Value ~= 0) then
+        item.MoveSpeed.IsChanged = 1;
+    end
     
     Vars.Set("Vars", item);
 end
@@ -166,7 +168,7 @@ Vars.MoveSpeed.IsChanged = function ()
         return false;
     end
 
-    return item.MoveSpeed.IsChanged;
+    return item.MoveSpeed.IsChanged == 1;
 end
 
 Vars.MoveSpeed.Updated = function()
@@ -277,7 +279,7 @@ Vars.PlayerScale.Enabled = function ()
         return false;
     end
 
-    return item.PlayerScale.Enabled;
+    return item.PlayerScale.Enabled == 1;
 end
 
 Vars.PlayerScale.Value = function ()
@@ -297,7 +299,7 @@ Vars.PlayerScale.IsChanged = function ()
         return false;
     end
 
-    return item.PlayerScale.IsChanged;
+    return item.PlayerScale.IsChanged == 1;
 end
 
 Vars.PlayerScale.Updated = function ()
@@ -318,8 +320,11 @@ Vars.PlayerScale.SetEnabled = function (value)
     end
 
     item.PlayerScale.Enabled = value;
-    item.PlayerScale.IsChanged = 1;
+    if (item.PlayerScale.Value ~= 0) then
+        item.PlayerScale.IsChanged = 1;
+    end
 
+    Vars.Set("Vars", item);
 end
 
 Vars.PlayerScale.OldValue = function ()
@@ -572,3 +577,7 @@ Vars.Stats.Set = function (value)
     item.Stats.IsChanged = 1;
     Vars.Set("Vars", item);
 end
+
+Ext.Events.SessionLoading:Subscribe(function(object, event)
+    Vars.Register("Vars", var);
+end)

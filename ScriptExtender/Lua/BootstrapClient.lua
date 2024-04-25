@@ -1,8 +1,6 @@
 Ext.Require("Const.lua")
 Ext.Require("Vars.lua")
 
-Vars.Register("Vars", var)
-
 local window = Ext.IMGUI.NewWindow("Cailu Menu 2", 600, 200);
 
 local tabs = window.AddTabBar(window, "Tabs");
@@ -27,7 +25,16 @@ tabGeneral.AddSeparator(tabGeneral);
 
 
 local enabledPlayerScale = tabGeneral.AddCheckbox(tabGeneral, "Enable Player Scale", false);
-local sliderPlayerScale = tabGeneral.AddSlider(tabGeneral, "Player Scale", -1, 10, 0);
+
+enabledPlayerScale.OnChange = function(sender)
+    Vars.PlayerScale.SetEnabled(sender.Checked and 1 or 0);
+end
+
+local sliderPlayerScale = tabGeneral.AddSlider(tabGeneral, "Player Scale", 1, 10, 0);
+
+sliderPlayerScale.OnChange = function(sender)
+    Vars.PlayerScale.Set(sender.Value[1])
+end
 
 tabGeneral.AddSeparator(tabGeneral);
 
@@ -77,32 +84,3 @@ statApply.OnClick = function()
     -- end
 end
 
-Ext.Events.Tick:Subscribe(function(object, event)
-
-    
-    -- if (sliderPlayerHealth.Value[1] ~= bVars.PlayerHealthPercentage) then
-    --     bVars.PlayerHealthPercentage = sliderPlayerHealth.Value[1];
-    --     Vars.Set("PlayerHealthPercentage", bVars.PlayerHealthPercentage);
-    -- end
-
-    -- if (inputGold.Value[1] ~= bVars.SetGold) then
-    --     bVars.inputGold = inputGold.Value[1];
-    --     Vars.Set("SetGold", bVars.inputGold);
-    -- end
-
-    -- if ((checkRollCritic.Checked and 1 or 0) ~= bVars.DiceRollsCritic) then
-    --     bVars.DiceRollsCritic = checkRollCritic.Checked and 1 or 0;
-    --     Vars.Set("DiceRollsCritic", bVars.DiceRollsCritic);
-    -- end
-
-    -- if ((checkGodMode.Checked and 1 or 0) ~= bVars.GodMode) then
-    --     bVars.GodMode = checkGodMode.Checked and 1 or 0;
-    --     Vars.Set("GodMode", bVars.GodMode);
-    -- end
-
-    -- if (sliderPlayerScale.Value[1] ~= bVars.PlayerScale) then
-    --     bVars.PlayerScale = sliderPlayerScale.Value[1];
-    --     Vars.Set("PlayerScale", bVars.PlayerScale);
-    -- end
-
-end, { Once = false })
