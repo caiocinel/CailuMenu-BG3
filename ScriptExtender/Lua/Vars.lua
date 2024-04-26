@@ -88,8 +88,7 @@ Vars.Register = function(varName, defaultValue)
         SyncToClient = true,
         SyncToServer = true,
         WriteableOnServer = true,
-        WriteableOnClient = true,
-        SyncOnWrite = true
+        WriteableOnClient = true
     })
 
 
@@ -179,6 +178,7 @@ Vars.MoveSpeed.Updated = function()
     end
 
     item.MoveSpeed.IsChanged = 0;
+    Vars.Set("Vars", item);
 end
 
 Vars.MoveSpeed.OldValue = function ()
@@ -310,6 +310,7 @@ Vars.PlayerScale.Updated = function ()
     end
 
     item.PlayerScale.IsChanged = 0;
+    Vars.Set("Vars", item);
 end
 
 Vars.PlayerScale.SetEnabled = function (value)

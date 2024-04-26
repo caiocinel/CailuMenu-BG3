@@ -59,7 +59,7 @@ local statApply = tabStats.AddButton(tabStats, "Apply")
 
 statApply.OnClick = function()
     --_D(Vars.GetAll())
-    _D(Vars.MoveSpeed.Enabled())
+    _D(Vars.GetAll())
 
 
     return;
