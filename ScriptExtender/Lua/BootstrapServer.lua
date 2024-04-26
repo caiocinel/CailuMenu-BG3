@@ -18,7 +18,6 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
 
     if (Vars.MoveSpeed.IsChanged()) then
-
         if(Vars.MoveSpeed.Enabled()) then
             for i, v in pairs(oMovementVars) do
                 _C().ServerCharacter.Template[i] = oMovementVars[i] * Vars.MoveSpeed.Value();
@@ -41,6 +40,18 @@ Ext.Events.Tick:Subscribe(function(object, event)
         end
     
         Vars.PlayerScale.Updated();
+    end
+
+    if((Vars.PlayerHealth.IsChanged()) or (Vars.PlayerHealth.Type() == 2)) then
+        if(Vars.PlayerHealth.Type() == 1) then
+            Osi.SetImmortal(GetHostCharacter(), 0);
+            Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
+        else
+            Osi.SetImmortal(GetHostCharacter(), 1);
+            Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
+        end
+
+        Vars.PlayerHealth.Updated();
     end
 
 

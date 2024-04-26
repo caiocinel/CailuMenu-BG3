@@ -11,17 +11,15 @@ var.MoveSpeed = {
     OldValue = 0
 }
 
-var.PlayerHealth = {
+var.PlayerScale = {
     Enabled = 0,
     Value = 0,
     OldValue = 0,
     IsChanged = 0
 }
 
-var.PlayerScale = {
-    Enabled = 0,
-    Value = 0,
-    OldValue = 0,
+var.PlayerHealth = {
+    Type = 0,
     IsChanged = 0
 }
 
@@ -205,107 +203,42 @@ Vars.MoveSpeed.Set = function (value)
     Vars.Set("Vars", item);
 end
 
-Vars.PlayerHealth = {};
-
-Vars.PlayerHealth.Enabled = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.PlayerHealth.Enabled;
-end
-
-Vars.PlayerHealth.Value = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.PlayerHealth.Value;
-end
-
-Vars.PlayerHealth.IsChanged = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.PlayerHealth.IsChanged;
-end
-
-Vars.PlayerHealth.Updated = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    item.PlayerHealth.IsChanged = 0;
-end
-
-Vars.PlayerHealth.OldValue = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.PlayerHealth.OldValue;
-end
-
-Vars.PlayerHealth.Set = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.PlayerHealth.OldValue = item.PlayerHealth.Value;
-    item.PlayerHealth.Value = value;
-    item.PlayerHealth.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
 Vars.PlayerScale = {};
 
-Vars.PlayerScale.Enabled = function ()
+Vars.PlayerScale.Enabled = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return false;
     end
 
     return item.PlayerScale.Enabled == 1;
 end
 
-Vars.PlayerScale.Value = function ()
+Vars.PlayerScale.Value = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return 0;
     end
 
     return item.PlayerScale.Value;
 end
 
-Vars.PlayerScale.IsChanged = function ()
+Vars.PlayerScale.IsChanged = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return false;
     end
 
     return item.PlayerScale.IsChanged == 1;
 end
 
-Vars.PlayerScale.Updated = function ()
+Vars.PlayerScale.Updated = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return false;
     end
 
@@ -313,10 +246,10 @@ Vars.PlayerScale.Updated = function ()
     Vars.Set("Vars", item);
 end
 
-Vars.PlayerScale.SetEnabled = function (value)
+Vars.PlayerScale.SetEnabled = function(value)
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return 0;
     end
 
@@ -328,20 +261,20 @@ Vars.PlayerScale.SetEnabled = function (value)
     Vars.Set("Vars", item);
 end
 
-Vars.PlayerScale.OldValue = function ()
+Vars.PlayerScale.OldValue = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return 0;
     end
 
     return item.PlayerScale.OldValue;
 end
 
-Vars.PlayerScale.Set = function (value)
+Vars.PlayerScale.Set = function(value)
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return;
     end
 
@@ -351,233 +284,52 @@ Vars.PlayerScale.Set = function (value)
     Vars.Set("Vars", item);
 end
 
-Vars.SetGold = {};
+Vars.PlayerHealth = {};
 
-Vars.SetGold.Enabled = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.SetGold.Enabled;
-end
-
-Vars.SetGold.Value = function ()
+Vars.PlayerHealth.Type = function ()
     local item = Vars.GetAll();
 
     if(item == nil) then
         return 0;
     end
 
-    return item.SetGold.Value;
+    return item.PlayerHealth.Type;
 end
 
-Vars.SetGold.IsChanged = function ()
+Vars.PlayerHealth.IsChanged = function ()
     local item = Vars.GetAll();
 
     if(item == nil) then
         return false;
     end
 
-    return item.SetGold.IsChanged;
+    return item.PlayerHealth.IsChanged == 1;
 end
 
-Vars.SetGold.Updated = function ()
+Vars.PlayerHealth.Updated = function()
     local item = Vars.GetAll();
 
     if(item == nil) then
         return false;
     end
 
-    item.SetGold.IsChanged = 0;
+    item.PlayerHealth.IsChanged = 0;
+    Vars.Set("Vars", item);
 end
 
-Vars.SetGold.OldValue = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.SetGold.OldValue;
-end
-
-Vars.SetGold.Set = function (value)
+Vars.PlayerHealth.SetType = function (value)
     local item = Vars.GetAll();
 
     if(item == nil) then
         return;
     end
 
-    item.SetGold.OldValue = item.SetGold.Value;
-    item.SetGold.Value = value;
-    item.SetGold.IsChanged = 1;
+    item.PlayerHealth.Type = value;
+    item.PlayerHealth.IsChanged = 1;
+
     Vars.Set("Vars", item);
 end
 
-Vars.DiceRollsCritic = {};
-
-Vars.DiceRollsCritic.Enabled = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.DiceRollsCritic.Enabled;
-end
-
-Vars.DiceRollsCritic.Value = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.DiceRollsCritic.Value;
-end
-
-Vars.DiceRollsCritic.IsChanged = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.DiceRollsCritic.IsChanged;
-end
-
-Vars.DiceRollsCritic.Updated = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    item.DiceRollsCritic.IsChanged = 0;
-end
-
-Vars.DiceRollsCritic.OldValue = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.DiceRollsCritic.OldValue;
-end
-
-Vars.DiceRollsCritic.Set = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.DiceRollsCritic.OldValue = item.DiceRollsCritic.Value;
-    item.DiceRollsCritic.Value = value;
-    item.DiceRollsCritic.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-Vars.GodMode = {};
-
-Vars.GodMode.Enabled = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.GodMode.Enabled;
-end
-
-Vars.GodMode.Value = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.GodMode.Value;
-end
-
-Vars.GodMode.OldValue = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.GodMode.OldValue;
-end
-
-Vars.GodMode.Set = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.GodMode.OldValue = item.GodMode.Value;
-    item.GodMode.Value = value;
-    Vars.Set("Vars", item);
-end
-
-Vars.Stats = {};
-
-Vars.Stats.Enabled = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.Stats.Enabled;
-end
-
-Vars.Stats.Value = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.Stats.Value;
-end
-
-Vars.Stats.IsChanged = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.Stats.IsChanged;
-end
-
-Vars.Stats.Updated = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    item.Stats.IsChanged = 0;
-end
-
-Vars.Stats.Set = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.Stats.Value = value;
-    item.Stats.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
 
 Ext.Events.SessionLoading:Subscribe(function(object, event)
     Vars.Register("Vars", var);
