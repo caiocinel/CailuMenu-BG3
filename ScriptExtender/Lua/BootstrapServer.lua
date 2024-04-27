@@ -3,7 +3,10 @@ Ext.Require("Vars.lua")
 Ext.Require("ServerFunctions.lua")
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-        
+    
+
+
+
 end)
 
 
@@ -116,6 +119,36 @@ Ext.Events.Tick:Subscribe(function(object, event)
         end
 
         Vars.OneHitKill.Updated();
+    end
+
+    if(Vars.MapFog.IsChanged()) then
+        if(Vars.MapFog.Enabled()) then
+            Osi.ShroudRender(0)
+        else
+            Osi.ShroudRender(1)
+        end
+
+        Vars.MapFog.Updated();
+    end
+
+    if(Vars.UnlockWaypoints.IsChanged()) then
+        UnlockWaypoints();
+        Vars.UnlockWaypoints.Updated();
+    end
+
+    if (Vars.LockWaypoints.IsChanged()) then
+        LockWaypoints();
+        Vars.LockWaypoints.Updated();
+    end
+
+    if (Vars.InspirationPoints.IsChanged()) then
+        Osi.GiveInspirationPoints(GetHostCharacter(), 4, "", "")
+        Vars.LockWaypoints.Updated();
+    end
+
+    if (Vars.MaxLevel.IsChanged()) then
+        Osi.AddExplorationExperience(GetHostCharacter(), 10000000)
+        Vars.MaxLevel.Updated();
     end
 
 end, { Once = false })

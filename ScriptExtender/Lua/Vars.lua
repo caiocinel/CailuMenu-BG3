@@ -1,5 +1,47 @@
 Vars = {}
 
+Vars.Get = function(varName)
+    return Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName]
+end
+
+Vars.Set = function(varName, value)
+    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] = value
+end
+
+Vars.GetAll = function()
+    return Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")['Vars'];
+end
+
+Vars.CanLoop = function()
+    if (not Ext.Mod.IsModLoaded("787ce468-859f-4e07-83e2-61c31139e1bc")) then
+        return false;
+    end
+
+    if (Vars.GetAll() == nil) then
+        return false;
+    end
+
+    return true;
+end
+
+Vars.Register = function(varName, defaultValue)
+    Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", varName, {
+        Server = true,
+        Client = true,
+        SyncToClient = true,
+        SyncToServer = true,
+        WriteableOnServer = true,
+        WriteableOnClient = true
+    })
+
+
+    if (not Ext.Mod.IsModLoaded("787ce468-859f-4e07-83e2-61c31139e1bc")) then
+        return;
+    end
+
+    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] = defaultValue;
+end
+
 local var = {}
 
 var.Teste = "ata";
@@ -58,47 +100,213 @@ var.OneHitKill = {
     IsChanged = 0
 }
 
-Vars.Register = function(varName, defaultValue)
-    Ext.Vars.RegisterModVariable("787ce468-859f-4e07-83e2-61c31139e1bc", varName, {
-        Server = true,
-        Client = true,
-        SyncToClient = true,
-        SyncToServer = true,
-        WriteableOnServer = true,
-        WriteableOnClient = true
-    })
+var.MapFog = {
+    Enabled = 0,
+    IsChanged = 0
+}
 
+var.UnlockWaypoints = {
+    IsChanged = 0
+}
 
-    if (not Ext.Mod.IsModLoaded("787ce468-859f-4e07-83e2-61c31139e1bc")) then
-        return;
+var.LockWaypoints = {
+    IsChanged = 0
+}
+
+var.InspirationPoints = {
+    IsChanged = 0
+}
+
+var.MaxLevel = {
+    IsChanged = 0
+}
+
+Vars.MaxLevel = {};
+
+Vars.MaxLevel.Toggle = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
     end
 
-    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] = defaultValue;
+    item.MaxLevel.IsChanged = 1;
+    Vars.Set("Vars", item);
 end
 
-Vars.Get = function(varName)
-    return Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName]
-end
 
-Vars.Set = function(varName, value)
-    Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] = value
-end
+Vars.MaxLevel.IsChanged = function()
+    local item = Vars.GetAll();
 
-Vars.GetAll = function()
-    return Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")['Vars'];
-end
-
-Vars.CanLoop = function()
-    if (not Ext.Mod.IsModLoaded("787ce468-859f-4e07-83e2-61c31139e1bc")) then
+    if (item == nil) then
         return false;
     end
 
-    if (Vars.GetAll() == nil) then
+    return item.MaxLevel.IsChanged == 1;
+end
+
+Vars.MaxLevel.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
         return false;
     end
 
-    return true;
+    item.MaxLevel.IsChanged = 0;
+    Vars.Set("Vars", item);
 end
+
+Vars.InspirationPoints = {};
+
+Vars.InspirationPoints.Toggle = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.InspirationPoints.IsChanged = 1;
+    Vars.Set("Vars", item);
+end
+
+Vars.InspirationPoints.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.InspirationPoints.IsChanged == 1;
+end
+
+Vars.InspirationPoints.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.InspirationPoints.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.LockWaypoints = {};
+
+Vars.LockWaypoints.Toggle = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.LockWaypoints.IsChanged = 1;
+    Vars.Set("Vars", item);
+end
+
+Vars.LockWaypoints.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.LockWaypoints.IsChanged == 1;
+end
+
+Vars.LockWaypoints.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.LockWaypoints.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.UnlockWaypoints = {};
+
+Vars.UnlockWaypoints.Toggle = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.UnlockWaypoints.IsChanged = 1;
+    Vars.Set("Vars", item);
+end
+
+Vars.UnlockWaypoints.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.UnlockWaypoints.IsChanged == 1;
+end
+
+Vars.UnlockWaypoints.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.UnlockWaypoints.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.MapFog = {};
+
+Vars.MapFog.Enabled = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.MapFog.Enabled == 1;
+end
+
+Vars.MapFog.SetEnabled = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.MapFog.Enabled = value;
+    if (item.MapFog.Value ~= 0) then
+        item.MapFog.IsChanged = 1;
+    end
+
+    Vars.Set("Vars", item);
+end
+
+
+Vars.MapFog.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.MapFog.IsChanged == 1;
+end
+
+Vars.MapFog.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.MapFog.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
 
 Vars.OneHitKill = {};
 

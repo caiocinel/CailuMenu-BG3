@@ -6,9 +6,7 @@ local window = Ext.IMGUI.NewWindow("Cailu Menu 2", 600, 200);
 
 local tabs = window.AddTabBar(window, "Tabs");
 
-
 local tabGeneral = tabs.AddTabItem(tabs, "General");
-
 
 ImGuiCheckbox(tabGeneral, "Enable Movement Speed", false, function(sender)
     Vars.MoveSpeed.SetEnabled(sender.Checked and 1 or 0);
@@ -56,6 +54,10 @@ ImGuiButton(tabGeneral, "Add Tadpoles", function(sender)
     Vars.Tadpole.SetIsChanged();
 end, function(sender) sender.SameLine = true end);
 
+ImGuiButton(tabGeneral, "Max Inspiration Points ", function(sender)
+    Vars.InspirationPoints.Toggle();
+end);
+
 
 ImGuiSeparator(tabGeneral);
 
@@ -79,4 +81,25 @@ end);
 
 ImGuiCheckbox(tabGeneral, "One Hit Kill", false, function(sender)
     Vars.OneHitKill.SetEnabled(sender.Checked and 1 or 0);
+end);
+
+ImGuiButton(tabGeneral, "Level Up", function(sender)
+    Vars.MaxLevel.Toggle();
+end);
+
+
+local tabGeneral = tabs.AddTabItem(tabs, "Maps");
+
+ImGuiCheckbox(tabGeneral, "Remove Map Fog", false, function(sender)
+    Vars.MapFog.SetEnabled(sender.Checked and 1 or 0);
+end);
+
+ImGuiButton(tabGeneral, "Unlock Waypoints", function(sender)
+    Vars.UnlockWaypoints.Toggle();
+    Vars.MapFog.SetEnabled(1);
+end);
+
+ImGuiButton(tabGeneral, "Lock Waypoints", function(sender)
+    Vars.LockWaypoints.Toggle();
+    Vars.MapFog.SetEnabled(0);
 end);
