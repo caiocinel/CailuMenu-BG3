@@ -59,6 +59,12 @@ ImGuiCheckbox(tabGeneral, "Infinite Actions and Movement", false, function(sende
     Vars.InfiniteActions.SetEnabled(sender.Checked and 1 or 0);
 end);
 
+ImGuiCheckbox(tabGeneral, "Unlimited Carry Capacity", false, function(sender)
+    Vars.UnlimitedCarryCapacity.SetEnabled(sender.Checked and 1 or 0);
+end, function(sender)
+    ImGuiText(sender.Tooltip(sender), "Commonly incompatible with carrying capacity mods");
+end);
+
 
 
 

@@ -83,6 +83,16 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.InfiniteActions.Updated();
     end
 
+    if (Vars.UnlimitedCarryCapacity.IsChanged()) then
+        if (Vars.UnlimitedCarryCapacity.Enabled()) then
+            Osi.AddBoosts(GetHostCharacter(), "CarryCapacityMultiplier(1000)", "", GetHostCharacter())
+        else
+            Osi.RemoveBoosts(GetHostCharacter(), "CarryCapacityMultiplier(1000)", 0, "", GetHostCharacter())
+        end
+
+        Vars.UnlimitedCarryCapacity.Updated();
+    end
+
 
     -- if (Vars.Get("GodMode") ~= nil and Vars.Get("GodMode") ~= bVars.GodMode) then
     --     bVars.GodMode = Vars.Get("GodMode");
@@ -91,12 +101,12 @@ Ext.Events.Tick:Subscribe(function(object, event)
     --         
     --         
     --         Osi.AddBoosts(GetHostCharacter(), "DamageBonus(999)", "", GetHostCharacter())
-    --         Osi.AddBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", "", GetHostCharacter())
+    --         
     --     else
     --         
     --         
     --         Osi.RemoveBoosts(GetHostCharacter(), "DamageBonus(999)", 0, "", GetHostCharacter())
-    --         Osi.RemoveBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", 0, "", GetHostCharacter())
+    --         
     --     end
 
     --     Osi.SetImmortal(GetHostCharacter(), bVars.GodMode);

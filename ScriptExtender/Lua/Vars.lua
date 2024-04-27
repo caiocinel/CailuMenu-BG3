@@ -38,6 +38,11 @@ var.InfiniteActions = {
     IsChanged = 0
 }
 
+var.UnlimitedCarryCapacity = {
+    Enabled = 0,
+    IsChanged = 0
+}
+
 
 var.Stats = {
     Enabled = 0,
@@ -432,13 +437,6 @@ Vars.PerfectRolls.Updated = function()
     Vars.Set("Vars", item);
 end
 
-
-
-
-
-
-
-
 Vars.InfiniteActions = {};
 
 Vars.InfiniteActions.Enabled = function()
@@ -487,6 +485,62 @@ Vars.InfiniteActions.Updated = function()
     item.InfiniteActions.IsChanged = 0;
     Vars.Set("Vars", item);
 end
+
+
+
+
+
+
+
+Vars.UnlimitedCarryCapacity = {};
+
+Vars.UnlimitedCarryCapacity.Enabled = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.UnlimitedCarryCapacity.Enabled == 1;
+end
+
+Vars.UnlimitedCarryCapacity.SetEnabled = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.UnlimitedCarryCapacity.Enabled = value;
+    if (item.UnlimitedCarryCapacity.Value ~= 0) then
+        item.UnlimitedCarryCapacity.IsChanged = 1;
+    end
+
+    Vars.Set("Vars", item);
+end
+
+
+Vars.UnlimitedCarryCapacity.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.UnlimitedCarryCapacity.IsChanged == 1;
+end
+
+Vars.UnlimitedCarryCapacity.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.UnlimitedCarryCapacity.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
 
 Ext.Events.SessionLoading:Subscribe(function(object, event)
     Vars.Register("Vars", var);
