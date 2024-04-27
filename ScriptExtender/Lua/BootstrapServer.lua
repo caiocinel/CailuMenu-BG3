@@ -61,16 +61,16 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.Gold.Updated();
     end
     
+    if(Vars.PerfectRolls.IsChanged()) then
+        if(Vars.PerfectRolls.Enabled()) then
+            EnableLucky()
+        else
+            DisableLucky()
+        end
 
-    -- if (Vars.Get("DiceRollsCritic") ~= nil and Vars.Get("DiceRollsCritic") ~= bVars.DiceRollsCritic) then
-    --     bVars.DiceRollsCritic = Vars.Get("DiceRollsCritic");
+        Vars.PerfectRolls.Updated();
+    end
 
-    --     if(bVars.DiceRollsCritic == 1) then
-    --         EnableLucky()
-    --     else
-    --         DisableLucky()
-    --     end
-    -- end
 
     -- if (Vars.Get("GodMode") ~= nil and Vars.Get("GodMode") ~= bVars.GodMode) then
     --     bVars.GodMode = Vars.Get("GodMode");

@@ -48,7 +48,14 @@ ImGuiButton(tabGeneral, "Set Gold", function(sender)
     Vars.Gold.SetIsChanged();
 end, function(sender) sender.SameLine = true end);
 
-local checkRollCritic = tabGeneral.AddCheckbox(tabGeneral, "Perfect Rolls", false);
+
+ImGuiSeparator(tabGeneral);
+
+
+ImGuiCheckbox(tabGeneral, "Perfect Rolls", false, function(sender)
+    Vars.PerfectRolls.SetEnabled(sender.Checked and 1 or 0);
+end);
+
 
 local checkGodMode = tabGeneral.AddCheckbox(tabGeneral, "God Mode", false);
 

@@ -1,6 +1,6 @@
 Vars = {}
 
-var = {}
+local var = {}
 
 var.Teste = "ata";
 
@@ -28,10 +28,8 @@ var.Gold = {
     Value = 0
 }
 
-var.DiceRollsCritic = {
+var.PerfectRolls = {
     Enabled = 0,
-    Value = 0,
-    OldValue = 0,
     IsChanged = 0
 }
 
@@ -384,6 +382,58 @@ Vars.Gold.SetIsChanged = function()
     Vars.Set("Vars", item);
 end
 
+
+
+
+
+Vars.PerfectRolls = {};
+
+Vars.PerfectRolls.Enabled = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.PerfectRolls.Enabled == 1;
+end
+
+Vars.PerfectRolls.SetEnabled = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.PerfectRolls.Enabled = value;
+    if (item.PerfectRolls.Value ~= 0) then
+        item.PerfectRolls.IsChanged = 1;
+    end
+
+    Vars.Set("Vars", item);
+end
+
+
+Vars.PerfectRolls.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.PerfectRolls.IsChanged == 1;
+end
+
+Vars.PerfectRolls.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.PerfectRolls.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
 
 Ext.Events.SessionLoading:Subscribe(function(object, event)
     Vars.Register("Vars", var);
