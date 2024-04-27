@@ -108,44 +108,15 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.MaxStats.Updated();
     end
 
+    if (Vars.OneHitKill.IsChanged()) then
+        if (Vars.OneHitKill.Enabled()) then
+            Osi.AddBoosts(GetHostCharacter(), "DamageBonus(9999)", "", GetHostCharacter())
+        else
+            Osi.RemoveBoosts(GetHostCharacter(), "DamageBonus(9999)", 0, "", GetHostCharacter())
+        end
 
-    -- if (Vars.Get("GodMode") ~= nil and Vars.Get("GodMode") ~= bVars.GodMode) then
-    --     bVars.GodMode = Vars.Get("GodMode");
-
-    --     if(bVars.GodMode == 1) then
-    --         
-    --         
-    --         Osi.AddBoosts(GetHostCharacter(), "DamageBonus(999)", "", GetHostCharacter())
-    --         
-    --     else
-    --         
-    --         
-    --         Osi.RemoveBoosts(GetHostCharacter(), "DamageBonus(999)", 0, "", GetHostCharacter())
-    --         
-    --     end
-
-    --     Osi.SetImmortal(GetHostCharacter(), bVars.GodMode);
-    -- end
-
-    -- if(bVars.GodMode == 1) then
-    --     -- print("ATa");
-    --     Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
-    -- end
-
-    -- if Vars.Get("Stats") ~= nil then
-
-    --     for i, v in pairs(Vars.Get("Stats")) do            
-    --         if(v ~= -1) then
-    --             Osi.AddBoosts(GetHostCharacter(),
-    --                 "Ability(" ..
-    --                 i ..
-    --                 ", " .. tostring(Ext.Math.Trunc(v - _C().Stats.Abilities[oStatsListIndex[i]])):gsub(".0", "") .. ")",
-    --                 "", GetHostCharacter())
-    --         end
-    --     end
-
-    --     Vars.Set("Stats", nil)        
-    -- end
+        Vars.OneHitKill.Updated();
+    end
 
 end, { Once = false })
 

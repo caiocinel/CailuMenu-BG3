@@ -48,6 +48,14 @@ ImGuiButton(tabGeneral, "Set Gold", function(sender)
     Vars.Gold.SetIsChanged();
 end, function(sender) sender.SameLine = true end);
 
+ImGuiInputInt(tabGeneral, "##Tadpoles", 0, function(sender)
+    Vars.Tadpole.Set(sender.Value[1]);
+end);
+
+ImGuiButton(tabGeneral, "Add Tadpoles", function(sender)
+    Vars.Tadpole.SetIsChanged();
+end, function(sender) sender.SameLine = true end);
+
 
 ImGuiSeparator(tabGeneral);
 
@@ -69,3 +77,6 @@ ImGuiCheckbox(tabGeneral, "Max Stats", false, function(sender)
     Vars.MaxStats.SetEnabled(sender.Checked and 1 or 0);
 end);
 
+ImGuiCheckbox(tabGeneral, "One Hit Kill", false, function(sender)
+    Vars.OneHitKill.SetEnabled(sender.Checked and 1 or 0);
+end);

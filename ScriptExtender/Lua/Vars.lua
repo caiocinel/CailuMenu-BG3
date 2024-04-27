@@ -43,8 +43,17 @@ var.UnlimitedCarryCapacity = {
     IsChanged = 0
 }
 
-
 var.MaxStats = {
+    Enabled = 0,
+    IsChanged = 0
+}
+
+var.Tadpole = {
+    IsChanged = 0,
+    Value = 0
+}
+
+var.OneHitKill = {
     Enabled = 0,
     IsChanged = 0
 }
@@ -90,6 +99,112 @@ Vars.CanLoop = function()
 
     return true;
 end
+
+Vars.OneHitKill = {};
+
+Vars.OneHitKill.Enabled = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.OneHitKill.Enabled == 1;
+end
+
+Vars.OneHitKill.SetEnabled = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.OneHitKill.Enabled = value;
+    if (item.OneHitKill.Value ~= 0) then
+        item.OneHitKill.IsChanged = 1;
+    end
+
+    Vars.Set("Vars", item);
+end
+
+
+Vars.OneHitKill.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.OneHitKill.IsChanged == 1;
+end
+
+Vars.OneHitKill.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.OneHitKill.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.Tadpole = {};
+
+Vars.Tadpole.Value = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    return item.Tadpole.Value;
+end
+
+Vars.Tadpole.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.Tadpole.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.Tadpole.Set = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return;
+    end
+
+    item.Tadpole.Value = value;
+
+    Vars.Set("Vars", item);
+end
+
+Vars.Tadpole.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    return item.Tadpole.IsChanged == 1;
+end
+
+Vars.Tadpole.SetIsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return;
+    end
+
+    item.Tadpole.IsChanged = 1;
+    Vars.Set("Vars", item);
+end
+
 
 Vars.MoveSpeed = {};
 
