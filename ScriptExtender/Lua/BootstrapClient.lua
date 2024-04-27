@@ -40,9 +40,13 @@ end, function(sender) sender.SameLine = true end);
 
 ImGuiSeparator(tabGeneral);
 
-ImGuiInputInt(tabGeneral, "Gold", 0, function(sender)
-    Vars.Set("SetGold", sender.Value[1]);
+ImGuiInputInt(tabGeneral, "##Gold", 0, function(sender)
+    Vars.Gold.Set(sender.Value[1]);
 end);
+
+ImGuiButton(tabGeneral, "Set Gold", function(sender)
+    Vars.Gold.SetApply();
+end, function(sender) sender.SameLine = true end);
 
 local checkRollCritic = tabGeneral.AddCheckbox(tabGeneral, "Perfect Rolls", false);
 

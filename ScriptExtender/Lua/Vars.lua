@@ -23,11 +23,9 @@ var.PlayerHealth = {
     IsChanged = 0
 }
 
-var.SetGold = {
-    Enabled = 0,
-    Value = 0,
-    OldValue = 0,
-    IsChanged = 0
+var.Gold = {
+    Apply = 0,
+    Value = 0
 }
 
 var.DiceRollsCritic = {
@@ -327,6 +325,62 @@ Vars.PlayerHealth.SetType = function (value)
     item.PlayerHealth.Type = value;
     item.PlayerHealth.IsChanged = 1;
 
+    Vars.Set("Vars", item);
+end
+
+Vars.Gold = {};
+
+Vars.Gold.Value = function ()
+    local item = Vars.GetAll();
+
+    if(item == nil) then
+        return 0;
+    end
+
+    return item.Gold.Value;
+end
+
+Vars.Gold.Updated = function()
+    local item = Vars.GetAll();
+
+    if(item == nil) then
+        return false;
+    end
+
+    item.Gold.Apply = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.Gold.Set = function (value)
+    local item = Vars.GetAll();
+
+    if(item == nil) then
+        return;
+    end
+
+    item.Gold.Value = value;
+
+    Vars.Set("Vars", item);
+end
+
+Vars.Gold.Apply = function ()
+    local item = Vars.GetAll();
+
+    if(item == nil) then
+        return 0;
+    end
+
+    return item.Gold.Apply == 1;
+end
+
+Vars.Gold.SetApply = function ()
+    local item = Vars.GetAll();
+
+    if(item == nil) then
+        return;
+    end
+
+    item.Gold.Apply = 1;
     Vars.Set("Vars", item);
 end
 

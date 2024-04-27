@@ -55,17 +55,12 @@ Ext.Events.Tick:Subscribe(function(object, event)
     end
 
 
-    -- if (Vars.Get("PlayerHealthPercentage") ~= nil and Vars.Get("PlayerHealthPercentage") ~= bVars.PlayerHealthPercentage) then
 
-    --     local newHP = Osi.GetMaxHitpoints(GetHostCharacter()) * (Vars.Get("PlayerHealthPercentage") / 100);
-    --     Osi.SetHitpoints(GetHostCharacter(), newHP, "Guaranteed");
-    --     bVars.PlayerHealthPercentage = Vars.Get("PlayerHealthPercentage");
-    -- end
+    if(Vars.Gold.Apply()) then
+        Osi.AddGold(GetHostCharacter(), Vars.Gold.Value() - Osi.GetGold(GetHostCharacter()));
+        Vars.Gold.Updated();
+    end
     
-    -- if (Vars.Get("SetGold") ~= nil and Vars.Get("SetGold") ~= -1) then
-    --     Osi.AddGold(GetHostCharacter(), Vars.Get("SetGold") - Osi.GetGold(GetHostCharacter()));
-    --     Vars.Set("SetGold", -1);
-    -- end
 
     -- if (Vars.Get("DiceRollsCritic") ~= nil and Vars.Get("DiceRollsCritic") ~= bVars.DiceRollsCritic) then
     --     bVars.DiceRollsCritic = Vars.Get("DiceRollsCritic");
