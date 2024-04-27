@@ -44,40 +44,9 @@ var.UnlimitedCarryCapacity = {
 }
 
 
-var.Stats = {
+var.MaxStats = {
     Enabled = 0,
-    Value = {
-        Strength = {
-            Enabled = 0,
-            Value = 0,
-            OldValue = 0
-        },
-        Dexterity = {
-            Enabled = 0,
-            Value = 0,
-            OldValue = 0
-        },
-        Constitution = {
-            Enabled = 0,
-            Value = 0,
-            OldValue = 0
-        },
-        Intelligence = {
-            Enabled = 0,
-            Value = 0,
-            OldValue = 0
-        },
-        Wisdom = {
-            Enabled = 0,
-            Value = 0,
-            OldValue = 0
-        },
-        Charisma = {
-            Enabled = 0,
-            Value = 0,
-            OldValue = 0
-        }
-    },
+    IsChanged = 0
 }
 
 Vars.Register = function(varName, defaultValue)
@@ -486,12 +455,6 @@ Vars.InfiniteActions.Updated = function()
     Vars.Set("Vars", item);
 end
 
-
-
-
-
-
-
 Vars.UnlimitedCarryCapacity = {};
 
 Vars.UnlimitedCarryCapacity.Enabled = function()
@@ -538,6 +501,55 @@ Vars.UnlimitedCarryCapacity.Updated = function()
     end
 
     item.UnlimitedCarryCapacity.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.MaxStats = {};
+
+Vars.MaxStats.Enabled = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.MaxStats.Enabled == 1;
+end
+
+Vars.MaxStats.SetEnabled = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.MaxStats.Enabled = value;
+    if (item.MaxStats.Value ~= 0) then
+        item.MaxStats.IsChanged = 1;
+    end
+
+    Vars.Set("Vars", item);
+end
+
+
+Vars.MaxStats.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.MaxStats.IsChanged == 1;
+end
+
+Vars.MaxStats.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.MaxStats.IsChanged = 0;
     Vars.Set("Vars", item);
 end
 

@@ -65,44 +65,7 @@ end, function(sender)
     ImGuiText(sender.Tooltip(sender), "Commonly incompatible with carrying capacity mods");
 end);
 
-
-
-
-local tabStats = tabs.AddTabItem(tabs, "Stats");
-local oStatsWidgets = {}
-
-for key, value in pairs(oStatsList) do
-    if(value ~= "None") then
-        oStatsWidgets[value] = tabStats.AddSliderInt(tabStats, value, -1, 30, 0);
-    end    
-end
-
-local statApply = tabStats.AddButton(tabStats, "Apply")
-
-statApply.OnClick = function()
-    --_D(Vars.GetAll())
-    _D(Vars.GetAll())
-
-
-    return;
-    -- for key, value in pairs(oStatsList) do
-    --     if(value ~= "None") then
-    --         local originalStats = Vars.Get("Stats");
-
-    --         if(originalStats == nil) then
-    --             originalStats = {
-    --                 Strength = -1,
-    --                 Dexterity = -1,
-    --                 Constitution = -1,
-    --                 Intelligence = -1,
-    --                 Wisdom = -1,
-    --                 Charisma = -1,
-    --             };
-    --         end
-
-    --         originalStats[value] = oStatsWidgets[value].Value[1];
-    --         Vars.Set("Stats", originalStats);
-    --     end
-    -- end
-end
+ImGuiCheckbox(tabGeneral, "Max Stats", false, function(sender)
+    Vars.MaxStats.SetEnabled(sender.Checked and 1 or 0);
+end);
 

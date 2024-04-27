@@ -93,6 +93,21 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.UnlimitedCarryCapacity.Updated();
     end
 
+    if (Vars.MaxStats.IsChanged()) then
+        if(Vars.MaxStats.Enabled()) then
+            for _, v in pairs(oStatsList) do
+                Osi.AddBoosts(GetHostCharacter(),"Ability(" ..v ..", 99)", "", GetHostCharacter())
+            end
+        else
+            for _, v in pairs(oStatsList) do
+                Osi.RemoveBoosts(GetHostCharacter(), "Ability(" .. v .. ", 99)", 0, "", GetHostCharacter())
+            end
+        end
+
+
+        Vars.MaxStats.Updated();
+    end
+
 
     -- if (Vars.Get("GodMode") ~= nil and Vars.Get("GodMode") ~= bVars.GodMode) then
     --     bVars.GodMode = Vars.Get("GodMode");
