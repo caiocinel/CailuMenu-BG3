@@ -24,7 +24,7 @@ var.PlayerHealth = {
 }
 
 var.Gold = {
-    Apply = 0,
+    IsChanged = 0,
     Value = 0
 }
 
@@ -347,7 +347,7 @@ Vars.Gold.Updated = function()
         return false;
     end
 
-    item.Gold.Apply = 0;
+    item.Gold.IsChanged = 0;
     Vars.Set("Vars", item);
 end
 
@@ -363,24 +363,24 @@ Vars.Gold.Set = function (value)
     Vars.Set("Vars", item);
 end
 
-Vars.Gold.Apply = function ()
+Vars.Gold.IsChanged = function()
     local item = Vars.GetAll();
 
     if(item == nil) then
         return 0;
     end
 
-    return item.Gold.Apply == 1;
+    return item.Gold.IsChanged == 1;
 end
 
-Vars.Gold.SetApply = function ()
+Vars.Gold.SetIsChanged = function()
     local item = Vars.GetAll();
 
     if(item == nil) then
         return;
     end
 
-    item.Gold.Apply = 1;
+    item.Gold.IsChanged = 1;
     Vars.Set("Vars", item);
 end
 

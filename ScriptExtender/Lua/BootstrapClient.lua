@@ -45,7 +45,7 @@ ImGuiInputInt(tabGeneral, "##Gold", 0, function(sender)
 end);
 
 ImGuiButton(tabGeneral, "Set Gold", function(sender)
-    Vars.Gold.SetApply();
+    Vars.Gold.SetIsChanged();
 end, function(sender) sender.SameLine = true end);
 
 local checkRollCritic = tabGeneral.AddCheckbox(tabGeneral, "Perfect Rolls", false);

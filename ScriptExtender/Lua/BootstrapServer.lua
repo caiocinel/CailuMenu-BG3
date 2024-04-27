@@ -56,7 +56,7 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
 
 
-    if(Vars.Gold.Apply()) then
+    if (Vars.Gold.IsChanged()) then
         Osi.AddGold(GetHostCharacter(), Vars.Gold.Value() - Osi.GetGold(GetHostCharacter()));
         Vars.Gold.Updated();
     end
