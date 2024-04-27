@@ -33,11 +33,11 @@ var.PerfectRolls = {
     IsChanged = 0
 }
 
-var.GodMode = {
+var.InfiniteActions = {
     Enabled = 0,
-    Value = 0,
-    OldValue = 0
+    IsChanged = 0
 }
+
 
 var.Stats = {
     Enabled = 0,
@@ -383,9 +383,6 @@ Vars.Gold.SetIsChanged = function()
 end
 
 
-
-
-
 Vars.PerfectRolls = {};
 
 Vars.PerfectRolls.Enabled = function()
@@ -432,6 +429,62 @@ Vars.PerfectRolls.Updated = function()
     end
 
     item.PerfectRolls.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+
+
+
+
+
+
+
+Vars.InfiniteActions = {};
+
+Vars.InfiniteActions.Enabled = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.InfiniteActions.Enabled == 1;
+end
+
+Vars.InfiniteActions.SetEnabled = function(value)
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.InfiniteActions.Enabled = value;
+    if (item.InfiniteActions.Value ~= 0) then
+        item.InfiniteActions.IsChanged = 1;
+    end
+
+    Vars.Set("Vars", item);
+end
+
+
+Vars.InfiniteActions.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.InfiniteActions.IsChanged == 1;
+end
+
+Vars.InfiniteActions.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.InfiniteActions.IsChanged = 0;
     Vars.Set("Vars", item);
 end
 

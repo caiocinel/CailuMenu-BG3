@@ -51,13 +51,15 @@ end, function(sender) sender.SameLine = true end);
 
 ImGuiSeparator(tabGeneral);
 
-
 ImGuiCheckbox(tabGeneral, "Perfect Rolls", false, function(sender)
     Vars.PerfectRolls.SetEnabled(sender.Checked and 1 or 0);
 end);
 
+ImGuiCheckbox(tabGeneral, "Infinite Actions and Movement", false, function(sender)
+    Vars.InfiniteActions.SetEnabled(sender.Checked and 1 or 0);
+end);
 
-local checkGodMode = tabGeneral.AddCheckbox(tabGeneral, "God Mode", false);
+
 
 
 local tabStats = tabs.AddTabItem(tabs, "Stats");

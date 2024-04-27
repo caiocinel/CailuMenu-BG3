@@ -71,18 +71,30 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.PerfectRolls.Updated();
     end
 
+    if (Vars.InfiniteActions.IsChanged()) then
+        if (Vars.InfiniteActions.Enabled()) then
+            Osi.AddBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", "", GetHostCharacter())
+            Osi.AddBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", "", GetHostCharacter())
+        else
+            Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", 0, "", GetHostCharacter())
+            Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", 0, "", GetHostCharacter())
+        end
+
+        Vars.InfiniteActions.Updated();
+    end
+
 
     -- if (Vars.Get("GodMode") ~= nil and Vars.Get("GodMode") ~= bVars.GodMode) then
     --     bVars.GodMode = Vars.Get("GodMode");
 
     --     if(bVars.GodMode == 1) then
-    --         Osi.AddBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", "", GetHostCharacter())
-    --         Osi.AddBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", "", GetHostCharacter())
+    --         
+    --         
     --         Osi.AddBoosts(GetHostCharacter(), "DamageBonus(999)", "", GetHostCharacter())
     --         Osi.AddBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", "", GetHostCharacter())
     --     else
-    --         Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", 0, "", GetHostCharacter())
-    --         Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", 0, "", GetHostCharacter())
+    --         
+    --         
     --         Osi.RemoveBoosts(GetHostCharacter(), "DamageBonus(999)", 0, "", GetHostCharacter())
     --         Osi.RemoveBoosts(GetHostCharacter(), "CarryCapacityMultiplier(10)", 0, "", GetHostCharacter())
     --     end
