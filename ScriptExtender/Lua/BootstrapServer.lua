@@ -151,6 +151,16 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.MaxLevel.Updated();
     end
 
+    if (Vars.ChangeClass.IsChanged()) then        
+        Osi.StartRespec(GetHostCharacter())
+        Vars.ChangeClass.Updated();
+    end
+
+    if (Vars.ChangeAppearance.IsChanged()) then
+        Osi.StartChangeAppearance(GetHostCharacter())
+        Vars.ChangeAppearance.Updated();
+    end
+
 end, { Once = false })
 
 

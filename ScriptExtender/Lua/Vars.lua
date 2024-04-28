@@ -121,6 +121,84 @@ var.MaxLevel = {
     IsChanged = 0
 }
 
+var.ChangeClass = {
+    IsChanged = 0
+}
+
+var.ChangeAppearance = {
+    IsChanged = 0
+}
+
+Vars.ChangeAppearance = {};
+
+Vars.ChangeAppearance.Toggle = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.ChangeAppearance.IsChanged = 1;
+    Vars.Set("Vars", item);
+end
+
+
+Vars.ChangeAppearance.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.ChangeAppearance.IsChanged == 1;
+end
+
+Vars.ChangeAppearance.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.ChangeAppearance.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
+Vars.ChangeClass = {};
+
+Vars.ChangeClass.Toggle = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return 0;
+    end
+
+    item.ChangeClass.IsChanged = 1;
+    Vars.Set("Vars", item);
+end
+
+
+Vars.ChangeClass.IsChanged = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    return item.ChangeClass.IsChanged == 1;
+end
+
+Vars.ChangeClass.Updated = function()
+    local item = Vars.GetAll();
+
+    if (item == nil) then
+        return false;
+    end
+
+    item.ChangeClass.IsChanged = 0;
+    Vars.Set("Vars", item);
+end
+
 Vars.MaxLevel = {};
 
 Vars.MaxLevel.Toggle = function()

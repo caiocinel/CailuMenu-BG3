@@ -87,6 +87,13 @@ ImGuiButton(tabGeneral, "Level Up", function(sender)
     Vars.MaxLevel.Toggle();
 end);
 
+ImGuiButton(tabGeneral, "Change Class", function(sender)
+    Vars.ChangeClass.Toggle();
+end);
+
+ImGuiButton(tabGeneral, "Change Appearance", function(sender)
+    Vars.ChangeAppearance.Toggle();
+end);
 
 local tabGeneral = tabs.AddTabItem(tabs, "Maps");
 
