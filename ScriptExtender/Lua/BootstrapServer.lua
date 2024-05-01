@@ -2,8 +2,10 @@ Ext.Require("Const.lua")
 Ext.Require("Vars.lua")
 Ext.Require("ServerFunctions.lua")
 
-Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-    Osi.SetTadpoleTreeState(GetHostCharacter(), 1)
+Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster, spell, _, _, _)
+    if(Vars.MagicSlots.Enabled()) then
+        Osi.RestoreParty(GetHostCharacter())
+    end
 end)
 
 
@@ -195,11 +197,10 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.GatherParty.Updated();
     end
 
-
-
-
+    if (Vars.MagicSlots.IsChanged()) then
+        Osi.RestoreParty(GetHostCharacter())
+        Vars.MagicSlots.Updated();
+    end
 
 end, { Once = false })
-
-
 

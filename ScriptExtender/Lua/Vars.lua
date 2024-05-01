@@ -330,7 +330,7 @@ var.EnableIllithid , Vars.EnableIllithid = Vars.UseButtonState("EnableIllithid")
 var.DisableIllithid, Vars.DisableIllithid = Vars.UseButtonState("DisableIllithid");
 var.GoToCamp , Vars.GoToCamp = Vars.UseButtonState("GoToCamp");
 var.GatherParty, Vars.GatherParty = Vars.UseButtonState("GatherParty");
-
+var.MagicSlots, Vars.MagicSlots = Vars.UseCheckboxState("MagicSlots");
 
 
 

@@ -103,6 +103,10 @@ ImGuiButton(tabGeneral, "Gather Party", function(sender)
     Vars.GatherParty.Toggle();
 end);
 
+ImGuiCheckbox(tabGeneral, "Magic Slots", false, function(sender)
+    Vars.MagicSlots.SetEnabled(sender.Checked and 1 or 0);
+end);
+
 
 
 
