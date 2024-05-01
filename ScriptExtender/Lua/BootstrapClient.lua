@@ -131,6 +131,10 @@ ImGuiButton(tabGeneral, "Add Item", function(sender)
     Vars.AddItem.SetIsChanged();
 end, function(sender) sender.SameLine = true end);
 
+ImGuiCheckbox(tabGeneral, "Invisibility", false, function(sender)
+    Vars.Invisibility.SetEnabled(sender.Checked and 1 or 0);
+end);
+
 
 
 

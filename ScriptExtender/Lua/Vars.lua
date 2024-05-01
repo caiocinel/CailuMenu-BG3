@@ -336,21 +336,7 @@ var.UnlimitedJumpDistance, Vars.UnlimitedJumpDistance = Vars.UseCheckboxState("U
 var.NoCombats, Vars.NoCombats = Vars.UseCheckboxState("NoCombats");
 var.NoDialogs, Vars.NoDialogs = Vars.UseCheckboxState("NoDialogs");
 var.AddItem, Vars.AddItem = Vars.UseTextState("AddItem");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var.Invisibility, Vars.Invisibility = Vars.UseCheckboxState("Invisibility");
 
 Ext.Events.SessionLoading:Subscribe(function(object, event)
     Vars.Register("Vars", var);

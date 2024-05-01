@@ -194,7 +194,8 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
     if (Vars.GoToCamp.IsChanged()) then
         Osi.ShroudRender(1)
-        Osi.TeleportTo(Osi.GetHostCharacter(), "0133f2ad-e121-4590-b5f0-a79413919805")
+        -- Osi.TeleportTo(Osi.GetHostCharacter(), "0133f2ad-e121-4590-b5f0-a79413919805")
+        Osi.TeleportTo(Osi.GetHostCharacter(), "3850ec1a-d951-45b7-9363-dc82e20bd28a")
         Vars.GoToCamp.Updated();
     end
 
@@ -233,6 +234,15 @@ Ext.Events.Tick:Subscribe(function(object, event)
             Osi.RemoveBoosts(GetHostCharacter(), "JumpMaxDistanceBonus(99999)", 0, "", GetHostCharacter())
         end
         Vars.UnlimitedJumpDistance.Updated();
+    end
+
+    if (Vars.Invisibility.IsChanged()) then
+        if (Vars.Invisibility.Enabled()) then
+            Osi.ApplyStatus(GetHostCharacter(), "INVISIBILITY", 99999, 1)
+        else
+            Osi.RemoveStatus(GetHostCharacter(), "INVISIBILITY", 'CailuMenu')
+        end
+        Vars.Invisibility.Updated();
     end
 
 end, { Once = false })
