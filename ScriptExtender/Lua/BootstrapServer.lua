@@ -2,8 +2,21 @@ Ext.Require("Const.lua")
 Ext.Require("Vars.lua")
 Ext.Require("ServerFunctions.lua")
 
+Ext.Osiris.RegisterListener("DialogStarted", 2, "after", function(dialog, instanceID)
+    if(Vars.NoDialogs.Enabled()) then
+        Osi.DialogRemoveActorFromDialog(instanceID, GetHostCharacter())
+    end
+end)
+
+Ext.Osiris.RegisterListener("CombatStarted", 1, "after", function(combatId)        
+    if(Vars.NoCombats.Enabled()) then
+        Osi.ApplyStatus(GetHostCharacter(), "INVISIBILITY", 10, 1)
+        Osi.EndCombat(combatId)
+    end
+end)
+
 Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster, spell, _, _, _)
-    if(Vars.MagicSlots.Enabled()) then
+    if (Vars.MagicSlots.Enabled()) then
         Osi.RestoreParty(GetHostCharacter())
     end
 end)
@@ -206,11 +219,20 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
     if (Vars.BringToTop.IsChanged()) then
         local clone_x, clone_y, clone_z = Osi.GetPosition(GetHostCharacter())
-        Osi.TeleportToPosition(GetHostCharacter(), clone_x, clone_y, clone_z, 'CailUMenu', 0, 0, 0, 1, 1);
+        Osi.TeleportToPosition(GetHostCharacter(), clone_x, clone_y+100, clone_z, 'CailuMenu', 0, 0, 0, 1, 1);
 
 
 
         Vars.BringToTop.Updated();
+    end
+
+    if (Vars.UnlimitedJumpDistance.IsChanged()) then
+        if (Vars.UnlimitedJumpDistance.Enabled()) then
+            Osi.AddBoosts(GetHostCharacter(), "JumpMaxDistanceBonus(99999)", "", GetHostCharacter())
+        else
+            Osi.RemoveBoosts(GetHostCharacter(), "JumpMaxDistanceBonus(99999)", 0, "", GetHostCharacter())
+        end
+        Vars.UnlimitedJumpDistance.Updated();
     end
 
 end, { Once = false })

@@ -332,7 +332,9 @@ var.GoToCamp , Vars.GoToCamp = Vars.UseButtonState("GoToCamp");
 var.GatherParty, Vars.GatherParty = Vars.UseButtonState("GatherParty");
 var.MagicSlots, Vars.MagicSlots = Vars.UseCheckboxState("MagicSlots");
 var.BringToTop, Vars.BringToTop = Vars.UseButtonState("BringToTop");
-
+var.UnlimitedJumpDistance, Vars.UnlimitedJumpDistance = Vars.UseCheckboxState("UnlimitedJumpDistance");
+var.NoCombats, Vars.NoCombats = Vars.UseCheckboxState("NoCombats");
+var.NoDialogs, Vars.NoDialogs = Vars.UseCheckboxState("NoDialogs");
 
 
 

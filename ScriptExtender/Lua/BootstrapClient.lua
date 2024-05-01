@@ -111,6 +111,20 @@ ImGuiButton(tabGeneral, "Bring to Top", function(sender)
     Vars.BringToTop.Toggle();
 end);
 
+ImGuiCheckbox(tabGeneral, "Unlimited Jump Dist.", false, function(sender)
+    Vars.UnlimitedJumpDistance.SetEnabled(sender.Checked and 1 or 0);
+end);
+
+ImGuiCheckbox(tabGeneral, "No Combats", false, function(sender)
+    Vars.NoCombats.SetEnabled(sender.Checked and 1 or 0);
+end);
+
+ImGuiCheckbox(tabGeneral, "No Dialogs", false, function(sender)
+    Vars.NoDialogs.SetEnabled(sender.Checked and 1 or 0);
+end);
+
+
+
 
 
 
