@@ -52,6 +52,17 @@ function ImGuiInputInt(parent, label, default, callback, --[[optional]] customPr
     return item;
 end
 
+function ImGuiInputText(parent, label, default, callback, --[[optional]] customProps)
+    local item = parent.AddInputText(parent, label, default);
+    item.OnChange = callback;
+
+    if (customProps ~= nil) then
+        customProps(item)
+    end
+
+    return item;
+end
+
 function ImGuiText(parent, text, --[[optional]] customProps)
     local item = parent.AddText(parent, text);
 

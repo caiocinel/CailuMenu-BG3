@@ -123,6 +123,14 @@ ImGuiCheckbox(tabGeneral, "No Dialogs", false, function(sender)
     Vars.NoDialogs.SetEnabled(sender.Checked and 1 or 0);
 end);
 
+ImGuiInputText(tabGeneral, "", "", function(sender)
+    Vars.AddItem.Set(sender.Value[1]);
+end);
+
+ImGuiButton(tabGeneral, "Add Item", function(sender)
+    Vars.AddItem.SetIsChanged();
+end, function(sender) sender.SameLine = true end);
+
 
 
 

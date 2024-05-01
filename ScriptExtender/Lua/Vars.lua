@@ -335,7 +335,7 @@ var.BringToTop, Vars.BringToTop = Vars.UseButtonState("BringToTop");
 var.UnlimitedJumpDistance, Vars.UnlimitedJumpDistance = Vars.UseCheckboxState("UnlimitedJumpDistance");
 var.NoCombats, Vars.NoCombats = Vars.UseCheckboxState("NoCombats");
 var.NoDialogs, Vars.NoDialogs = Vars.UseCheckboxState("NoDialogs");
-
+var.AddItem, Vars.AddItem = Vars.UseTextState("AddItem");
 
 
 
