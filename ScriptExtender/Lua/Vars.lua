@@ -211,22 +211,6 @@ Vars.UseTextState = function(key)
     return variable, functions
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Vars.UseSliderState = function(key)
     local variable = {
         Enabled = 0,
@@ -324,77 +308,6 @@ end
 local var = {}
 
 
-
-var.PlayerHealth = {
-    Type = 0,
-    IsChanged = 0
-}
-
-
-
-var.PerfectRolls = {
-    Enabled = 0,
-    IsChanged = 0
-}
-
-var.InfiniteActions = {
-    Enabled = 0,
-    IsChanged = 0
-}
-
-var.UnlimitedCarryCapacity = {
-    Enabled = 0,
-    IsChanged = 0
-}
-
-var.MaxStats = {
-    Enabled = 0,
-    IsChanged = 0
-}
-
-var.Tadpole = {
-    IsChanged = 0,
-    Value = 0
-}
-
-var.OneHitKill = {
-    Enabled = 0,
-    IsChanged = 0
-}
-
-var.MapFog = {
-    Enabled = 0,
-    IsChanged = 0
-}
-
-var.UnlockWaypoints = {
-    IsChanged = 0
-}
-
-var.LockWaypoints = {
-    IsChanged = 0
-}
-
-var.InspirationPoints = {
-    IsChanged = 0
-}
-
-var.MaxLevel = {
-    IsChanged = 0
-}
-
-var.ChangeClass = {
-    IsChanged = 0
-}
-
-var.ChangeAppearance = {
-    IsChanged = 0
-}
-
-var.ToggleIllite = {
-    IsChanged = 0
-}
-
 var.MoveSpeed, Vars.MoveSpeed = Vars.UseSliderState("MoveSpeed");
 var.PlayerScale, Vars.PlayerScale = Vars.UseSliderState("PlayerScale");
 var.Gold , Vars.Gold = Vars.UseTextState("Gold");
@@ -411,15 +324,8 @@ var.MaxLevel, Vars.MaxLevel = Vars.UseButtonState("MaxLevel");
 var.ChangeClass, Vars.ChangeClass = Vars.UseButtonState("ChangeClass");
 var.ChangeAppearance, Vars.ChangeAppearance = Vars.UseButtonState("ChangeAppearance");
 var.Tadpole, Vars.Tadpole = Vars.UseTextState("Tadpole");
-
-
-
-
-
-
-
-
-
+var.GodMode, Vars.GodMode = Vars.UseCheckboxState("GodMode");
+var.PlayerHeal, Vars.PlayerHeal = Vars.UseButtonState("PlayerHeal");
 
 
 

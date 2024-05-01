@@ -4,7 +4,6 @@ Ext.Require("ServerFunctions.lua")
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
     Osi.SetTadpoleTreeState(GetHostCharacter(), 1)
-    print("Ata")
 end)
 
 
@@ -14,9 +13,6 @@ Ext.Events.Tick:Subscribe(function(object, event)
     if ((Vars.CanLoop == nil) or (not Vars.CanLoop()) or (GetHostCharacter() == nil)) then
         return
     end
-
-    -- _D(Vars.GetAll())
-
 
     if (Vars.MoveSpeed.IsChanged()) then
         if(Vars.MoveSpeed.Enabled()) then
@@ -43,19 +39,22 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.PlayerScale.Updated();
     end
 
-    if((Vars.PlayerHealth.IsChanged()) or (Vars.PlayerHealth.Type() == 2)) then
-        if(Vars.PlayerHealth.Type() == 1) then
-            Osi.SetImmortal(GetHostCharacter(), 0);
-            Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
-        else
-            Osi.SetImmortal(GetHostCharacter(), 1);
-            Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
+    if((Vars.PlayerHeal.IsChanged()) or (Vars.GodMode.Enabled())) then
+        Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
+        if(not Vars.GodMode.Enabled()) then
+            Vars.PlayerHeal.Updated();
         end
-
-        Vars.PlayerHealth.Updated();
     end
 
+    if (Vars.GodMode.IsChanged()) then
+        if (Vars.GodMode.Enabled()) then
+            Osi.SetImmortal(GetHostCharacter(), 1);
+        else
+            Osi.SetImmortal(GetHostCharacter(), 0);
+        end
 
+        Vars.GodMode.Updated();
+    end
 
     if (Vars.Gold.IsChanged()) then
         Osi.AddGold(GetHostCharacter(), Vars.Gold.Value() - Osi.GetGold(GetHostCharacter()));

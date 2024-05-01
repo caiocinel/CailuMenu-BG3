@@ -29,11 +29,11 @@ end);
 ImGuiSeparator(tabGeneral);
 
 ImGuiButton(tabGeneral, "Heal Player", function(sender)
-    Vars.PlayerHealth.SetType(1);
+    Vars.PlayerHeal.Toggle();
 end);
 
 ImGuiCheckbox(tabGeneral, "God Mode", false, function(sender)
-    Vars.PlayerHealth.SetType(2);
+    Vars.GodMode.SetEnabled(sender.Checked and 1 or 0);
 end, function(sender) sender.SameLine = true end);
 
 ImGuiSeparator(tabGeneral);
