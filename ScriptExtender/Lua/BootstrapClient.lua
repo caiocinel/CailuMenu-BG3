@@ -107,6 +107,10 @@ ImGuiCheckbox(tabGeneral, "Infinite Spell Slots", false, function(sender)
     Vars.MagicSlots.SetEnabled(sender.Checked and 1 or 0);
 end);
 
+ImGuiButton(tabGeneral, "Bring to Top", function(sender)
+    Vars.BringToTop.Toggle();
+end);
+
 
 
 

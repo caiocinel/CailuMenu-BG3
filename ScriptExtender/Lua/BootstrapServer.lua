@@ -84,9 +84,11 @@ Ext.Events.Tick:Subscribe(function(object, event)
         if (Vars.InfiniteActions.Enabled()) then
             Osi.AddBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", "", GetHostCharacter())
             Osi.AddBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", "", GetHostCharacter())
+            Osi.AddBoosts(GetHostCharacter(), "ActionResource(BonusActionPoint, 9999, 0)", "", GetHostCharacter())
         else
             Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(Movement, 9999, 0)", 0, "", GetHostCharacter())
             Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(ActionPoint, 9999, 0)", 0, "", GetHostCharacter())
+            Osi.RemoveBoosts(GetHostCharacter(), "ActionResource(BonusActionPoint, 9999, 0)", 0, "", GetHostCharacter())
         end
 
         Vars.InfiniteActions.Updated();
@@ -200,6 +202,15 @@ Ext.Events.Tick:Subscribe(function(object, event)
     if (Vars.MagicSlots.IsChanged()) then
         Osi.RestoreParty(GetHostCharacter())
         Vars.MagicSlots.Updated();
+    end
+
+    if (Vars.BringToTop.IsChanged()) then
+        local clone_x, clone_y, clone_z = Osi.GetPosition(GetHostCharacter())
+        Osi.TeleportToPosition(GetHostCharacter(), clone_x, clone_y, clone_z, 'CailUMenu', 0, 0, 0, 1, 1);
+
+
+
+        Vars.BringToTop.Updated();
     end
 
 end, { Once = false })
