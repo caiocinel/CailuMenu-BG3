@@ -39,18 +39,20 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Vars.PlayerScale.Updated();
     end
 
-    if((Vars.PlayerHeal.IsChanged()) or (Vars.GodMode.Enabled())) then
+    if(Vars.PlayerHeal.IsChanged()) then
         Osi.SetHitpoints(GetHostCharacter(), Osi.GetMaxHitpoints(GetHostCharacter()), "Guaranteed");
-        if(not Vars.GodMode.Enabled()) then
-            Vars.PlayerHeal.Updated();
-        end
+        Vars.PlayerHeal.Updated();
     end
 
     if (Vars.GodMode.IsChanged()) then
         if (Vars.GodMode.Enabled()) then
             Osi.SetImmortal(GetHostCharacter(), 1);
+            Osi.ApplyStatus(GetHostCharacter(), "FREEDOM_OF_MOVEMENT", -1, 1)
+            Osi.ApplyStatus(GetHostCharacter(), "INVULNERABLE", -1, 1)
         else
             Osi.SetImmortal(GetHostCharacter(), 0);
+            Osi.RemoveStatus(GetHostCharacter(), "FREEDOM_OF_MOVEMENT")
+            Osi.RemoveStatus(GetHostCharacter(), "INVULNERABLE")
         end
 
         Vars.GodMode.Updated();
@@ -59,6 +61,11 @@ Ext.Events.Tick:Subscribe(function(object, event)
     if (Vars.Gold.IsChanged()) then
         Osi.AddGold(GetHostCharacter(), Vars.Gold.Value() - Osi.GetGold(GetHostCharacter()));
         Vars.Gold.Updated();
+    end
+
+    if (Vars.Tadpole.IsChanged()) then
+        Osi.AddTadpole(GetHostCharacter(), 5)
+        Vars.Tadpole.Updated();
     end
     
     if(Vars.PerfectRolls.IsChanged()) then
@@ -157,6 +164,40 @@ Ext.Events.Tick:Subscribe(function(object, event)
         Osi.StartChangeAppearance(GetHostCharacter())
         Vars.ChangeAppearance.Updated();
     end
+
+    if (Vars.EnableIllithid.IsChanged()) then
+        Osi.SetTadpoleTreeState(GetHostCharacter(), 2)
+        Vars.EnableIllithid.Updated();
+    end
+
+    if (Vars.DisableIllithid.IsChanged()) then
+        Osi.SetTadpoleTreeState(GetHostCharacter(), 1)
+        Vars.DisableIllithid.Updated();
+    end
+
+    if (Vars.GoToCamp.IsChanged()) then
+        Osi.ShroudRender(1)
+        Osi.TeleportTo(Osi.GetHostCharacter(), "0133f2ad-e121-4590-b5f0-a79413919805")
+        Vars.GoToCamp.Updated();
+    end
+
+    if (Vars.GatherParty.IsChanged()) then
+        Osi.TeleportTo("3ed74f06-3c60-42dc-83f6-f034cb47c679", GetHostCharacter())
+        Osi.TeleportTo("58a69333-40bf-8358-1d17-fff240d7fb12", GetHostCharacter())
+        Osi.TeleportTo("2c76687d-93a2-477b-8b18-8a14b549304c", GetHostCharacter())
+        Osi.TeleportTo("25721313-0c15-4935-8176-9f134385451b", GetHostCharacter())
+        Osi.TeleportTo("ad9af97d-75da-406a-ae13-7071c563f604", GetHostCharacter())
+        Osi.TeleportTo("c7c13742-bacd-460a-8f65-f864fe41f255", GetHostCharacter())
+        Osi.TeleportTo("c774d764-4a17-48dc-b470-32ace9ce447d", GetHostCharacter())
+        Osi.TeleportTo("7628bc0e-52b8-42a7-856a-13a6fd413323", GetHostCharacter())
+        Osi.TeleportTo("91b6b200-7d00-4d62-8dc9-99e8339dfa1a", GetHostCharacter())
+        Osi.TeleportTo("0de603c5-42e2-4811-9dad-f652de080eba", GetHostCharacter())
+        Vars.GatherParty.Updated();
+    end
+
+
+
+
 
 end, { Once = false })
 

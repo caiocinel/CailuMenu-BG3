@@ -323,58 +323,31 @@ var.InspirationPoints, Vars.InspirationPoints = Vars.UseButtonState("Inspiration
 var.MaxLevel, Vars.MaxLevel = Vars.UseButtonState("MaxLevel");
 var.ChangeClass, Vars.ChangeClass = Vars.UseButtonState("ChangeClass");
 var.ChangeAppearance, Vars.ChangeAppearance = Vars.UseButtonState("ChangeAppearance");
-var.Tadpole, Vars.Tadpole = Vars.UseTextState("Tadpole");
+var.Tadpole, Vars.Tadpole = Vars.UseButtonState("Tadpole");
 var.GodMode, Vars.GodMode = Vars.UseCheckboxState("GodMode");
 var.PlayerHeal, Vars.PlayerHeal = Vars.UseButtonState("PlayerHeal");
+var.EnableIllithid , Vars.EnableIllithid = Vars.UseButtonState("EnableIllithid");
+var.DisableIllithid, Vars.DisableIllithid = Vars.UseButtonState("DisableIllithid");
+var.GoToCamp , Vars.GoToCamp = Vars.UseButtonState("GoToCamp");
+var.GatherParty, Vars.GatherParty = Vars.UseButtonState("GatherParty");
 
 
 
 
-Vars.PlayerHealth = {};
 
-Vars.PlayerHealth.Type = function()
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return 0;
-    end
 
-    return item.PlayerHealth.Type;
-end
 
-Vars.PlayerHealth.IsChanged = function()
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return false;
-    end
 
-    return item.PlayerHealth.IsChanged == 1;
-end
 
-Vars.PlayerHealth.Updated = function()
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return false;
-    end
 
-    item.PlayerHealth.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
 
-Vars.PlayerHealth.SetType = function(value)
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return;
-    end
 
-    item.PlayerHealth.Type = value;
-    item.PlayerHealth.IsChanged = 1;
 
-    Vars.Set("Vars", item);
-end
+
 
 Ext.Events.SessionLoading:Subscribe(function(object, event)
     Vars.Register("Vars", var);

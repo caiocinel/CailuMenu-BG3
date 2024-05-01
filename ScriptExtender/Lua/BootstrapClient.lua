@@ -46,16 +46,12 @@ ImGuiButton(tabGeneral, "Set Gold", function(sender)
     Vars.Gold.SetIsChanged();
 end, function(sender) sender.SameLine = true end);
 
-ImGuiInputInt(tabGeneral, "##Tadpoles", 0, function(sender)
-    Vars.Tadpole.Set(sender.Value[1]);
+ImGuiButton(tabGeneral, "Max Inspiration Points ", function(sender)
+    Vars.InspirationPoints.Toggle();
 end);
 
 ImGuiButton(tabGeneral, "Add Tadpoles", function(sender)
-    Vars.Tadpole.SetIsChanged();
-end, function(sender) sender.SameLine = true end);
-
-ImGuiButton(tabGeneral, "Max Inspiration Points ", function(sender)
-    Vars.InspirationPoints.Toggle();
+    Vars.Tadpole.Toggle();
 end);
 
 
@@ -95,6 +91,29 @@ ImGuiButton(tabGeneral, "Change Appearance", function(sender)
     Vars.ChangeAppearance.Toggle();
 end);
 
+ImGuiButton(tabGeneral, "Enable Illithid", function(sender)
+    Vars.EnableIllithid.Toggle()
+end);
+
+ImGuiButton(tabGeneral, "Disable Illithid", function(sender)
+    Vars.DisableIllithid.Toggle()
+end, function(sender) sender.SameLine = true end);
+
+ImGuiButton(tabGeneral, "Gather Party", function(sender)
+    Vars.GatherParty.Toggle();
+end);
+
+
+
+
+
+
+
+
+
+
+
+
 local tabGeneral = tabs.AddTabItem(tabs, "Maps");
 
 ImGuiCheckbox(tabGeneral, "Remove Map Fog", false, function(sender)
@@ -110,3 +129,7 @@ ImGuiButton(tabGeneral, "Lock Waypoints", function(sender)
     Vars.LockWaypoints.Toggle();
     Vars.MapFog.SetEnabled(0);
 end);
+
+ImGuiButton(tabGeneral, "Go to Camp", function(sender)
+    Vars.GoToCamp.Toggle()
+end, function(sender) ImGuiText(sender.Tooltip(sender), "Wither must be in your camp or this will bug") end);
