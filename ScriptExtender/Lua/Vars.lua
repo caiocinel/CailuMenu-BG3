@@ -42,33 +42,295 @@ Vars.Register = function(varName, defaultValue)
     Ext.Vars.GetModVariables("787ce468-859f-4e07-83e2-61c31139e1bc")[varName] = defaultValue;
 end
 
+Vars.UseCheckboxState = function (key)
+    local variable = {
+        Enabled = 0,
+        IsChanged = 0
+    }
+
+
+    local functions = {};
+
+    functions.Enabled = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        return item[key].Enabled == 1;
+    end
+
+    functions.SetEnabled = function(value)
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return 0;
+        end
+
+        item[key].Enabled = value;
+        if (item[key].Value ~= 0) then
+            item[key].IsChanged = 1;
+        end
+
+        Vars.Set("Vars", item);
+    end
+
+
+    functions.IsChanged = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        return item[key].IsChanged == 1;
+    end
+
+    functions.Updated = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        item[key].IsChanged = 0;
+        Vars.Set("Vars", item);
+    end
+
+    return variable, functions;
+end
+
+Vars.UseButtonState = function(key)
+    local variable = {
+        IsChanged = 0
+    }
+
+
+    local functions = {};
+
+    functions.Toggle = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return 0;
+        end
+
+        item[key].IsChanged = 1;
+        Vars.Set("Vars", item);
+    end
+
+
+    functions.IsChanged = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        return item[key].IsChanged == 1;
+    end
+
+    functions.Updated = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        item[key].IsChanged = 0;
+        Vars.Set("Vars", item);
+    end
+
+    return variable, functions
+end
+
+Vars.UseTextState = function(key)
+    local variable = {
+        IsChanged = 0,
+        Value = 0
+    }
+
+
+    local functions = {};
+
+    functions.Value = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return 0;
+        end
+
+        return item[key].Value;
+    end
+
+    functions.Updated = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        item[key].IsChanged = 0;
+        Vars.Set("Vars", item);
+    end
+
+    functions.Set = function(value)
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return;
+        end
+
+        item[key].Value = value;
+
+        Vars.Set("Vars", item);
+    end
+
+    functions.IsChanged = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return 0;
+        end
+
+        return item[key].IsChanged == 1;
+    end
+
+    functions.SetIsChanged = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return;
+        end
+
+        item[key].IsChanged = 1;
+        Vars.Set("Vars", item);
+    end
+
+    return variable, functions
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Vars.UseSliderState = function(key)
+    local variable = {
+        Enabled = 0,
+        Value = 0,
+        IsChanged = 0,
+        OldValue = 0
+    }
+
+
+    local functions = {};
+
+    functions.Enabled = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        return item[key].Enabled == 1;
+    end
+
+    functions.SetEnabled = function(value)
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return;
+        end
+
+        item[key].Enabled = value;
+        if (item[key].Value ~= 0) then
+            item[key].IsChanged = 1;
+        end
+
+        Vars.Set("Vars", item);
+    end
+
+    functions.Value = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return 0;
+        end
+
+        return item[key].Value;
+    end
+
+    functions.IsChanged = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        return item[key].IsChanged == 1;
+    end
+
+    functions.Updated = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return false;
+        end
+
+        item[key].IsChanged = 0;
+        Vars.Set("Vars", item);
+    end
+
+    functions.OldValue = function()
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return 0;
+        end
+
+        return item[key].OldValue;
+    end
+
+    functions.Set = function(value)
+        local item = Vars.GetAll();
+
+        if (item == nil) then
+            return;
+        end
+
+        item[key].OldValue = item[key].Value;
+        item[key].Value = value;
+        item[key].IsChanged = 1;
+
+        Vars.Set("Vars", item);
+    end
+
+    return variable, functions
+end
+
 local var = {}
 
-var.Teste = "ata";
 
-var.MoveSpeed = {
-    Enabled = 0,
-    Value = 0,
-    IsChanged = 0,
-    OldValue = 0
-}
-
-var.PlayerScale = {
-    Enabled = 0,
-    Value = 0,
-    OldValue = 0,
-    IsChanged = 0
-}
 
 var.PlayerHealth = {
     Type = 0,
     IsChanged = 0
 }
 
-var.Gold = {
-    IsChanged = 0,
-    Value = 0
-}
+
 
 var.PerfectRolls = {
     Enabled = 0,
@@ -129,548 +391,55 @@ var.ChangeAppearance = {
     IsChanged = 0
 }
 
-Vars.ChangeAppearance = {};
+var.ToggleIllite = {
+    IsChanged = 0
+}
 
-Vars.ChangeAppearance.Toggle = function()
-    local item = Vars.GetAll();
+var.MoveSpeed, Vars.MoveSpeed = Vars.UseSliderState("MoveSpeed");
+var.PlayerScale, Vars.PlayerScale = Vars.UseSliderState("PlayerScale");
+var.Gold , Vars.Gold = Vars.UseTextState("Gold");
+var.PerfectRolls, Vars.PerfectRolls = Vars.UseCheckboxState("PerfectRolls");
+var.InfiniteActions, Vars.InfiniteActions = Vars.UseCheckboxState("InfiniteActions");
+var.UnlimitedCarryCapacity, Vars.UnlimitedCarryCapacity = Vars.UseCheckboxState("UnlimitedCarryCapacity");
+var.MaxStats, Vars.MaxStats = Vars.UseCheckboxState("MaxStats");
+var.OneHitKill, Vars.OneHitKill = Vars.UseCheckboxState("OneHitKill");
+var.MapFog, Vars.MapFog = Vars.UseCheckboxState("MapFog");
+var.UnlockWaypoints, Vars.UnlockWaypoints = Vars.UseButtonState("UnlockWaypoints");
+var.LockWaypoints, Vars.LockWaypoints = Vars.UseButtonState("LockWaypoints");
+var.InspirationPoints, Vars.InspirationPoints = Vars.UseButtonState("InspirationPoints");
+var.MaxLevel, Vars.MaxLevel = Vars.UseButtonState("MaxLevel");
+var.ChangeClass, Vars.ChangeClass = Vars.UseButtonState("ChangeClass");
+var.ChangeAppearance, Vars.ChangeAppearance = Vars.UseButtonState("ChangeAppearance");
+var.Tadpole, Vars.Tadpole = Vars.UseTextState("Tadpole");
 
-    if (item == nil) then
-        return 0;
-    end
 
-    item.ChangeAppearance.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
 
 
-Vars.ChangeAppearance.IsChanged = function()
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return false;
-    end
 
-    return item.ChangeAppearance.IsChanged == 1;
-end
 
-Vars.ChangeAppearance.Updated = function()
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return false;
-    end
 
-    item.ChangeAppearance.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
 
-Vars.ChangeClass = {};
 
-Vars.ChangeClass.Toggle = function()
-    local item = Vars.GetAll();
 
-    if (item == nil) then
-        return 0;
-    end
-
-    item.ChangeClass.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-
-Vars.ChangeClass.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.ChangeClass.IsChanged == 1;
-end
-
-Vars.ChangeClass.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.ChangeClass.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.MaxLevel = {};
-
-Vars.MaxLevel.Toggle = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.MaxLevel.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-
-Vars.MaxLevel.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.MaxLevel.IsChanged == 1;
-end
-
-Vars.MaxLevel.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.MaxLevel.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.InspirationPoints = {};
-
-Vars.InspirationPoints.Toggle = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.InspirationPoints.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-Vars.InspirationPoints.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.InspirationPoints.IsChanged == 1;
-end
-
-Vars.InspirationPoints.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.InspirationPoints.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.LockWaypoints = {};
-
-Vars.LockWaypoints.Toggle = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.LockWaypoints.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-Vars.LockWaypoints.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.LockWaypoints.IsChanged == 1;
-end
-
-Vars.LockWaypoints.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.LockWaypoints.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.UnlockWaypoints = {};
-
-Vars.UnlockWaypoints.Toggle = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.UnlockWaypoints.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-Vars.UnlockWaypoints.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.UnlockWaypoints.IsChanged == 1;
-end
-
-Vars.UnlockWaypoints.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.UnlockWaypoints.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.MapFog = {};
-
-Vars.MapFog.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.MapFog.Enabled == 1;
-end
-
-Vars.MapFog.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.MapFog.Enabled = value;
-    if (item.MapFog.Value ~= 0) then
-        item.MapFog.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-
-Vars.MapFog.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.MapFog.IsChanged == 1;
-end
-
-Vars.MapFog.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.MapFog.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-
-Vars.OneHitKill = {};
-
-Vars.OneHitKill.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.OneHitKill.Enabled == 1;
-end
-
-Vars.OneHitKill.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.OneHitKill.Enabled = value;
-    if (item.OneHitKill.Value ~= 0) then
-        item.OneHitKill.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-
-Vars.OneHitKill.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.OneHitKill.IsChanged == 1;
-end
-
-Vars.OneHitKill.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.OneHitKill.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.Tadpole = {};
-
-Vars.Tadpole.Value = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    return item.Tadpole.Value;
-end
-
-Vars.Tadpole.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.Tadpole.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.Tadpole.Set = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return;
-    end
-
-    item.Tadpole.Value = value;
-
-    Vars.Set("Vars", item);
-end
-
-Vars.Tadpole.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    return item.Tadpole.IsChanged == 1;
-end
-
-Vars.Tadpole.SetIsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return;
-    end
-
-    item.Tadpole.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-
-Vars.MoveSpeed = {};
-
-Vars.MoveSpeed.Enabled = function ()
-    local item = Vars.GetAll();    
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.MoveSpeed.Enabled == 1;
-end
-
-Vars.MoveSpeed.SetEnabled = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.MoveSpeed.Enabled = value;
-    if(item.MoveSpeed.Value ~= 0) then
-        item.MoveSpeed.IsChanged = 1;
-    end
-    
-    Vars.Set("Vars", item);
-end
-
-Vars.MoveSpeed.Value = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.MoveSpeed.Value;
-end
-
-Vars.MoveSpeed.IsChanged = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    return item.MoveSpeed.IsChanged == 1;
-end
-
-Vars.MoveSpeed.Updated = function()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    item.MoveSpeed.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.MoveSpeed.OldValue = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.MoveSpeed.OldValue;
-end
-
-Vars.MoveSpeed.Set = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.MoveSpeed.OldValue = item.MoveSpeed.Value;
-    item.MoveSpeed.Value = value;
-    item.MoveSpeed.IsChanged = 1;
-
-    Vars.Set("Vars", item);
-end
-
-Vars.PlayerScale = {};
-
-Vars.PlayerScale.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.PlayerScale.Enabled == 1;
-end
-
-Vars.PlayerScale.Value = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    return item.PlayerScale.Value;
-end
-
-Vars.PlayerScale.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.PlayerScale.IsChanged == 1;
-end
-
-Vars.PlayerScale.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.PlayerScale.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.PlayerScale.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.PlayerScale.Enabled = value;
-    if (item.PlayerScale.Value ~= 0) then
-        item.PlayerScale.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-Vars.PlayerScale.OldValue = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    return item.PlayerScale.OldValue;
-end
-
-Vars.PlayerScale.Set = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return;
-    end
-
-    item.PlayerScale.OldValue = item.PlayerScale.Value;
-    item.PlayerScale.Value = value;
-    item.PlayerScale.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
 
 Vars.PlayerHealth = {};
 
-Vars.PlayerHealth.Type = function ()
+Vars.PlayerHealth.Type = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return 0;
     end
 
     return item.PlayerHealth.Type;
 end
 
-Vars.PlayerHealth.IsChanged = function ()
+Vars.PlayerHealth.IsChanged = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return false;
     end
 
@@ -680,7 +449,7 @@ end
 Vars.PlayerHealth.Updated = function()
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return false;
     end
 
@@ -688,10 +457,10 @@ Vars.PlayerHealth.Updated = function()
     Vars.Set("Vars", item);
 end
 
-Vars.PlayerHealth.SetType = function (value)
+Vars.PlayerHealth.SetType = function(value)
     local item = Vars.GetAll();
 
-    if(item == nil) then
+    if (item == nil) then
         return;
     end
 
@@ -700,260 +469,6 @@ Vars.PlayerHealth.SetType = function (value)
 
     Vars.Set("Vars", item);
 end
-
-Vars.Gold = {};
-
-Vars.Gold.Value = function ()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.Gold.Value;
-end
-
-Vars.Gold.Updated = function()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return false;
-    end
-
-    item.Gold.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.Gold.Set = function (value)
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.Gold.Value = value;
-
-    Vars.Set("Vars", item);
-end
-
-Vars.Gold.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return 0;
-    end
-
-    return item.Gold.IsChanged == 1;
-end
-
-Vars.Gold.SetIsChanged = function()
-    local item = Vars.GetAll();
-
-    if(item == nil) then
-        return;
-    end
-
-    item.Gold.IsChanged = 1;
-    Vars.Set("Vars", item);
-end
-
-
-Vars.PerfectRolls = {};
-
-Vars.PerfectRolls.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.PerfectRolls.Enabled == 1;
-end
-
-Vars.PerfectRolls.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.PerfectRolls.Enabled = value;
-    if (item.PerfectRolls.Value ~= 0) then
-        item.PerfectRolls.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-
-Vars.PerfectRolls.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.PerfectRolls.IsChanged == 1;
-end
-
-Vars.PerfectRolls.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.PerfectRolls.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.InfiniteActions = {};
-
-Vars.InfiniteActions.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.InfiniteActions.Enabled == 1;
-end
-
-Vars.InfiniteActions.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.InfiniteActions.Enabled = value;
-    if (item.InfiniteActions.Value ~= 0) then
-        item.InfiniteActions.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-
-Vars.InfiniteActions.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.InfiniteActions.IsChanged == 1;
-end
-
-Vars.InfiniteActions.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.InfiniteActions.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.UnlimitedCarryCapacity = {};
-
-Vars.UnlimitedCarryCapacity.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.UnlimitedCarryCapacity.Enabled == 1;
-end
-
-Vars.UnlimitedCarryCapacity.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.UnlimitedCarryCapacity.Enabled = value;
-    if (item.UnlimitedCarryCapacity.Value ~= 0) then
-        item.UnlimitedCarryCapacity.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-
-Vars.UnlimitedCarryCapacity.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.UnlimitedCarryCapacity.IsChanged == 1;
-end
-
-Vars.UnlimitedCarryCapacity.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.UnlimitedCarryCapacity.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
-Vars.MaxStats = {};
-
-Vars.MaxStats.Enabled = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.MaxStats.Enabled == 1;
-end
-
-Vars.MaxStats.SetEnabled = function(value)
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return 0;
-    end
-
-    item.MaxStats.Enabled = value;
-    if (item.MaxStats.Value ~= 0) then
-        item.MaxStats.IsChanged = 1;
-    end
-
-    Vars.Set("Vars", item);
-end
-
-
-Vars.MaxStats.IsChanged = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    return item.MaxStats.IsChanged == 1;
-end
-
-Vars.MaxStats.Updated = function()
-    local item = Vars.GetAll();
-
-    if (item == nil) then
-        return false;
-    end
-
-    item.MaxStats.IsChanged = 0;
-    Vars.Set("Vars", item);
-end
-
 
 Ext.Events.SessionLoading:Subscribe(function(object, event)
     Vars.Register("Vars", var);

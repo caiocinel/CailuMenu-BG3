@@ -3,17 +3,15 @@ Ext.Require("Vars.lua")
 Ext.Require("ServerFunctions.lua")
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "before", function(caster, spell, _, _, _)
-    
-
-
-
+    Osi.SetTadpoleTreeState(GetHostCharacter(), 1)
+    print("Ata")
 end)
 
 
 Ext.Events.Tick:Subscribe(function(object, event)
     
     
-    if((Vars.CanLoop == nil) or (not Vars.CanLoop())) then
+    if ((Vars.CanLoop == nil) or (not Vars.CanLoop()) or (GetHostCharacter() == nil)) then
         return
     end
 
@@ -143,7 +141,7 @@ Ext.Events.Tick:Subscribe(function(object, event)
 
     if (Vars.InspirationPoints.IsChanged()) then
         Osi.GiveInspirationPoints(GetHostCharacter(), 4, "", "")
-        Vars.LockWaypoints.Updated();
+        Vars.InspirationPoints.Updated();
     end
 
     if (Vars.MaxLevel.IsChanged()) then
